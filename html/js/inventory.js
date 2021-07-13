@@ -27,7 +27,7 @@ window.addEventListener("message", function (event) {
         $(".ui").fadeOut();
         $(".item").remove();
         $("#otherInventory").html("<div id=\"noSecondInventoryMessage\"></div>");
-        $("#noSecondInventoryMessage").html(invLocale.secondInventoryNotAvailable);
+        $("#noSecondInventoryMessage").html("Second inventory is not available");
     } else if (event.data.action == "setType") {
         type = event.data.type;
     } else if (event.data.action == "setItems") {

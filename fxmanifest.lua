@@ -24,10 +24,6 @@ files {
   'html/css/jquery-ui.css',
   'html/js/inventory.js',
   'html/js/config.js',
-  -- JS LOCALES
-  'html/locales/cs.js',
-  'html/locales/en.js',
-  'html/locales/fr.js',
   -- ICONS
   'html/img/*.png'
 } --'html/img/.png',
