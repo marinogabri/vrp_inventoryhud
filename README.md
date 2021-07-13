@@ -32,3 +32,6 @@ Drag and drop inventory hud for vRP 1
 
 # Preview
 ![Preview](https://i.imgur.com/UHTKplj.png)
+
+# Credits
+Base on [Trsak's inventory](https://github.com/Trsak/esx_inventoryhud)
