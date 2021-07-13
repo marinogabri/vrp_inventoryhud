@@ -12,6 +12,15 @@ vRPclient = Tunnel.getInterface("vRP","vrp_inventoryhud")
 openInventories = {}
 local cfg_inventory = module("vrp","cfg/inventory")
 
+PerformHttpRequest("https://raw.githubusercontent.com/marinogabri/vrp_inventoryhud/master/version",function(err,newVersion,headers)
+	if err == 200 then
+		local curVersion = LoadResourceFile(GetCurrentResourceName(), "version")
+		if curVersion ~= newVersion then
+			print("^3[vRP Inventory Hud]^7 An update is avaible: https://github.com/marinogabri/vrp_inventoryhud")
+		end
+	end
+end, "GET")
+
 function vRPin.requestItemGive(idname, amount)
 	local _source = source
 	local user_id = vRP.getUserId({_source})
