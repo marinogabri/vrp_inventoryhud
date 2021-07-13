@@ -3,7 +3,6 @@ games { 'gta5' }
 
 author 'justgabri'
 
-version '1.1'
 ui_page 'html/ui.html'
 
 client_scripts {
