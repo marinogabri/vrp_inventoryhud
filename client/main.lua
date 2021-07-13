@@ -6,22 +6,12 @@ vRP = Proxy.getInterface("vRP")
 
 local isInInventory = false
 
--- Citizen.CreateThread(function()
---     while true do
---         Citizen.Wait(0)
---         if IsControlJustReleased(0, Config.OpenControl) and IsInputDisabled(0) then
---             openInventory()
---         end
---     end
--- end)
-
 RegisterCommand('inventory',function()
-    print("eee")
     if not vRP.isInComa() and not vRP.isHandcuffed() then
         openInventory()
     end
 end)
-RegisterKeyMapping('inventory', 'Opens Warnings', 'keyboard', 'F1')
+RegisterKeyMapping('inventory', 'Open Inventory', 'keyboard', 'F1')
 
 function openInventory()
     vRPin.loadPlayerInventory()
