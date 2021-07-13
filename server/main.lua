@@ -55,6 +55,22 @@ function vRPin.requestItemUse(idname)
 	end
 end
 
+function vRPin.requestItemDrop(idname, amount)
+	local user_id = vRP.getUserId({source})
+	local player = vRP.getUserSource({user_id})
+	if vRP.tryGetInventoryItem({user_id,idname,amount,true}) then
+		-- vRPclient.getPosition(player, {}, function(x,y,z)
+		-- 	local dropId = getDropInArea(vector3(x,y,z))
+		-- 	if dropId ~= nil then
+		-- 		vRPin.putIntoDrop(idname, amount, x, y, z)
+		-- 	else
+		-- 		vRPin.createDrop(idname, amount, x, y, z)
+		-- 	end
+		-- end)
+		INclient.loadPlayerInventory(player)
+	end
+end
+
 function vRPin.closeInventory()
 	openInventories[vRP.getUserId({source})] = nil
 end

@@ -95,6 +95,13 @@ function vRPin.getChestItems(chestname, player)
     end
 end
 
+function vRPin.openTrunk(name)
+    local user_id = vRP.getUserId({source})
+    local player = vRP.getUserSource({user_id})    
+    local id = "trunk:user-" .. user_id .. ":" .. name
+
+    openChest(user_id, player, id)
+end
 
 function isChestFree(id)
     for user_id, chestId in pairs(openInventories) do
@@ -106,6 +113,16 @@ function isChestFree(id)
     return true
 end
 
+function openChest(user_id, player, id)
+    if isChestFree(id) then
+        INclient.openSecondInventory(player, {"chest"})
+        openInventories[user_id] = id
+        vRPin.getChestItems(id, player)
+    else
+        vRPclient.notify(player,{"~r~Chest is busy."})
+    end
+end
+
 local function create_chest(user_id,player,name,position,permission)	
     local id = "chest:"..name
 
@@ -113,13 +130,7 @@ local function create_chest(user_id,player,name,position,permission)
 		local user_id = vRP.getUserId({player})
 		if user_id ~= nil then
 			if vRP.hasPermission({user_id, permission}) then
-				if isChestFree(id) then
-                    INclient.openChestInventory(player, {})
-                    openInventories[user_id] = id
-                    vRPin.getChestItems(id, player)
-                else
-                    vRPclient.notify(player,{"~r~Chest is busy."})
-                end
+                openChest(user_id, player, id)
 			end
 		end
 	end

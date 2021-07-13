@@ -13,7 +13,7 @@ RegisterCommand('inventory',function()
 end)
 RegisterKeyMapping('inventory', 'Open Inventory', 'keyboard', 'F1')
 
-function openInventory()
+function openInventory(skip)
     vRPin.loadPlayerInventory()
     isInInventory = true
     SendNUIMessage({
@@ -21,6 +21,14 @@ function openInventory()
         type = "normal" 
     })
     SetNuiFocus(true, true)
+
+    if not skip then
+        -- check if there is a trunk to open
+        local ok, vtype, name = vRP.getNearestOwnedVehicle({5})
+        if ok then
+            INserver.openTrunk({name})
+        end
+    end
 end
 
 function closeInventory()
@@ -45,7 +53,7 @@ end)
 RegisterNUICallback("DropItem", function(data, cb)
     if IsPedSittingInAnyVehicle(PlayerPedId()) then return end
     if type(data.number) == "number" and math.floor(data.number) == data.number then
-        INserver.createDrop({data.item.name, data.number})
+        INserver.requestItemDrop({data.item.name, tonumber(data.number)})
     end
     cb("ok")
 end)
@@ -73,6 +81,20 @@ function vRPin.setSecondInventoryItems(items, weight, maxWeight)
         weight = weight,
         maxWeight = maxWeight
     })
+end
+
+function vRPin.openSecondInventory(type)
+    openInventory(true)
+    isInInventory = true
+
+    SendNUIMessage(
+        {
+            action = "display",
+            type = type
+        }
+    )
+
+    SetNuiFocus(true, true)
 end
 
 Citizen.CreateThread(function()
