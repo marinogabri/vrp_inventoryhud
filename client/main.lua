@@ -15,12 +15,13 @@ local isInInventory = false
 --     end
 -- end)
 
-RegisterCommand('inv',function()
+RegisterCommand('inventory',function()
+    print("eee")
     if not vRP.isInComa() and not vRP.isHandcuffed() then
         openInventory()
     end
 end)
-RegisterKeyMapping('inv', 'Open inventory', 'keyboard', 'F1')
+RegisterKeyMapping('inventory', 'Opens Warnings', 'keyboard', 'F1')
 
 function openInventory()
     vRPin.loadPlayerInventory()
