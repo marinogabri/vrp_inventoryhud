@@ -15,6 +15,7 @@ local cfg_inventory = module("vrp","cfg/inventory")
 function vRPin.requestItemGive(idname, amount)
 	local _source = source
 	local user_id = vRP.getUserId({_source})
+	local player = vRP.getUserSource({user_id})
 	if user_id ~= nil then
 	  	-- get nearest player
 	  	vRPclient.getNearestPlayer(player,{10},function(nplayer)
@@ -40,7 +41,7 @@ function vRPin.requestItemGive(idname, amount)
 	  	end)
 	end
   
-	INclient.loadPlayerInventory(_source)
+	INclient.loadPlayerInventory(player)
 end
 
 function vRPin.requestItemUse(idname)

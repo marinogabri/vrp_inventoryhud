@@ -284,8 +284,12 @@ $(document).ready(function () {
 
             // if (itemData.canRemove) {
                 disableInventory(300);
-                $.post("http://vrp_inventoryhud/GetNearPlayers", JSON.stringify({
-                    item: itemData
+                // $.post("http://vrp_inventoryhud/GetNearPlayers", JSON.stringify({
+                //     item: itemData
+                // }));
+                $.post("http://vrp_inventoryhud/GiveItem", JSON.stringify({
+                    item: itemData,
+                    number: parseInt($("#count").val())
                 }));
             // }
         }
