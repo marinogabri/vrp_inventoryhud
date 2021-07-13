@@ -10,3 +10,4 @@ Drag and drop inventory hud for vRP 1
 - COMING SOON Shop support
 
 # Preview
+![Preview](https://i.imgur.com/UHTKplj.png)
