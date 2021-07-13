@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>ESX INVENTORY HUD BY TRSAK</title>
+    <title>vRP INVENTORY HUD</title>
     <link href="https://fonts.googleapis.com/css?family=Signika" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/ui.css">
     <!-- <link rel="stylesheet" type="text/css" href="css/jquery-ui.css"> -->
@@ -10,18 +10,9 @@
 
 <body>
     <script src="js/config.js"></script>
-    <script src="locales/fr.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="js/inventory.js"></script>
-    <script>
-        $(function () {
-            $("#dialog").dialog({
-                autoOpen: false,
-                clickOutside: true
-            });
-        });
-    </script>
 
     <div class="ui">
         <div class="inventory">
@@ -46,8 +37,7 @@
     </div>
 
     <div id="dialog">
-        <div id="nearPlayers">
-        </div>
+        <div id="nearPlayers"></div>
     </div>
 
 </body>
@@ -58,6 +48,11 @@
         $("#give").html("Give");
         $("#drop").html("Drop");
         $("#noSecondInventoryMessage").html("Second inventory is not available");
+
+        $("#dialog").dialog({
+            autoOpen: false,
+            clickOutside: true
+        });
     });
 </script>
 

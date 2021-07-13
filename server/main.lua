@@ -29,14 +29,12 @@ function vRPin.requestItemGive(idname, amount)
 		
 						vRPclient.playAnim(player,{true,{{"mp_common","givetake1_a",1}},false})
 						vRPclient.playAnim(nplayer,{true,{{"mp_common","givetake2_a",1}},false})
-					else
-						vRPclient.notify(player,{lang.common.invalid_value()})
 					end
 				else
-					vRPclient.notify(player,{lang.inventory.full()})
+					vRPclient.notify(player,{"~r~Inventory is full."})
 				end
 			else
-				vRPclient.notify(player,{lang.common.no_player_near()})
+				vRPclient.notify(player,{"~r~No players near you."})
 			end
 	  	end)
 	end
