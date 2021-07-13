@@ -4,11 +4,6 @@
     font-family: 'Signika', sans-serif;
     text-transform: uppercase;
     color: white;
-    text-shadow:
-        -0.5px -0.5px 0 #000,
-        0.5px -0.5px 0 #000,
-        -0.5px 0.5px 0 #000,
-        0.5px 0.5px 0 #000;
 }
 
 .ui {
@@ -17,7 +12,7 @@
     top: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.35);
+    background-color: rgba(0, 0, 0, 0.2);
     display: none;
     z-index: 0;
 }
@@ -29,15 +24,14 @@
     transform: translate(-50%, -50%);
     width: 1550px;
     height: 600px;
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, .4);
-    background-color: rgba(17, 5, 17, 0.2);
 }
 
 #playerInventory {
     width: 625px;
     height: 600px;
     float: left;
-    overflow-y: scroll
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #controls {
@@ -45,7 +39,6 @@
     height: 600px;
     float: left;
     position: relative;
-    background-color: rgba(17, 5, 17, 0.2);
     left: 0;
     top: 0;
 }
@@ -54,7 +47,8 @@
     width: 625px;
     height: 600px;
     float: left;
-    overflow-y: scroll
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #count {
@@ -77,13 +71,14 @@ input[type=number] {
     float: left;
     width: 117px;
     height: 117px;
-    background-color: rgba(17, 5, 17, 0.6);
+    background-color: rgba(10, 10, 10, 0.5);
     margin: 2px;
     position: relative;
+    border-radius: 8px;
 }
 
 .slot:hover {
-    opacity: 0.8;
+    background-color: rgba(10, 10, 10, 0.65);
 }
 
 .item,
@@ -105,7 +100,16 @@ input[type=number] {
     min-height: 20px;
     z-index: 500;
     font-size: 12px;
-    background-color: rgba(17, 5, 17, 0.8);
+    background-color: rgba(10, 10, 10, 0.65);;
+    border-radius: 8px;
+}
+
+.item-name-bg {
+    width: 100%;
+    width: 117px;
+    height: 20px;
+    position: absolute;
+    bottom: 0;
 }
 
 .ui-draggable-dragging .item-name,
@@ -148,11 +152,12 @@ input[type=number] {
 .control {
     width: 150px;
     height: 40px;
-    background-color: rgba(17, 5, 17, 0.6);
+    background-color: rgba(10, 10, 10, 0.5);
     margin: 10px;
     text-align: center;
     vertical-align: middle;
     line-height: 40px;
+    border-radius: 8px;
 }
 
 .control.disabled {
@@ -163,14 +168,6 @@ input[type=number] {
     background-color: rgb(10, 2, 10);
 }
 
-.item-name-bg {
-    width: 100%;
-    width: 117px;
-    height: 20px;
-    position: absolute;
-    bottom: 0;
-}
-
 #playerInventory::-webkit-scrollbar-track,
 #otherInventory::-webkit-scrollbar-track {
     background-color: none;
@@ -179,14 +176,13 @@ input[type=number] {
 
 #playerInventory::-webkit-scrollbar,
 #otherInventory::-webkit-scrollbar {
-    width: 10px;
-    background-color: rgba(17, 5, 17, 0.2);
+    width: 4px;
 }
 
 #playerInventory::-webkit-scrollbar-thumb,
 #otherInventory::-webkit-scrollbar-thumb {
-    background-color: rgba(17, 5, 17, 1);
-    border: 2px solid rgba(17, 5, 17, 1);
+	background-color: rgba(10, 10, 10, 0.5);
+	border-radius: 8px;
 }
 
 .nearbyPlayerButton {
@@ -237,8 +233,7 @@ input[type=number] {
     left: 50%;
     transform: translateX(-50%);
     max-width: 800px;
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, .4);
-    background-color: rgba(17, 5, 17, 0.6);
+    text-shadow: 1px 1px 10px rgba(0, 0, 0, .4);
 }
 
 @media (max-width: 1500px) {
