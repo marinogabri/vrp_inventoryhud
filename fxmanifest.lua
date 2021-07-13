@@ -8,16 +8,14 @@ client_scripts {
   "lib/Proxy.lua",
   'config.lua',
   'client/main.lua',
-  'client/chest.lua',
-  'client/drops.lua'
+  'client/chest.lua'
 }
 
 server_scripts {
   "@vrp/lib/utils.lua",
   'config.lua',	
   'server/main.lua',
-  'server/chest.lua',
-  'server/drops.lua'
+  'server/chest.lua'
 }
 
 files {
