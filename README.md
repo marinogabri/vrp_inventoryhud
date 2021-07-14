@@ -26,7 +26,7 @@ Drag and drop inventory hud for vRP 1
 - Well coded
 - Secure
 - Chest support
-- Trunks are now avaible! Press F1 near your personal vehicle and the trunk will open.
+- Trunks are now avaible! Press F1 near your personal vehicle and the trunk will open. You can also ask to open the trunk to the nearest player!
 - COMING SOON Shop support
 - COMING SOON Drops support
 

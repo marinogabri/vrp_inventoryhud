@@ -182,3 +182,38 @@ function task_save_chests()
     SetTimeout(Config.ChestSaveTime*60*1000, task_save_chests)
 end
 task_save_chests()
+
+vRP.registerMenuBuilder({"main", function(add, data)
+    local user_id = vRP.getUserId({data.player})
+    if user_id ~= nil then
+        -- add vehicle entry
+        local choices = {}
+        choices["[Inv] Ask open trunk"] = {function(player, choice)
+            vRPclient.getNearestPlayer(player,{10},function(nplayer)
+                local nuser_id = vRP.getUserId({nplayer})
+                if nuser_id ~= nil then
+                    -- vRPclient.notify(player,{vRP.lang.vehicle.asktrunk.asked()})
+                    vRP.request({nplayer,"A players wants to open your trunk",15,function(nplayer,ok)
+                        if ok then -- request accepted, open trunk
+                            vRPclient.getNearestOwnedVehicle(nplayer,{7},function(ok,vtype,name)
+                                if ok then
+                                    local chestname = "trunk:user-" .. nuser_id .. ":" .. string.lower(name)
+                                    openChest(user_id, player, chestname)
+                                else
+                                    vRPclient.notify(player,{"~r~No vehicles near you"})
+                                    vRPclient.notify(nplayer,{"~r~No vehicles near you"})
+                                end
+                            end)
+                        else
+                            vRPclient.notify(player,{"~r~Player refused"})
+                        end
+                    end})
+                else
+                    vRPclient.notify(player,{"~r~No players near you."})
+                end
+            end)
+        end}
+
+        add(choices)
+    end
+end})
