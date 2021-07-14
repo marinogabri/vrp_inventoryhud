@@ -26,12 +26,19 @@ Drag and drop inventory hud for vRP 1
 - Well coded
 - Secure
 - Chest support
-- COMING SOON Trunk support 
+- Trunks are now avaible! Press F1 near your personal vehicle and the trunk will open.
 - COMING SOON Shop support
 - COMING SOON Drops support
 
 # Preview
-![Preview](https://i.imgur.com/UHTKplj.png)
+- Inventory
+![Inventory](https://i.imgur.com/dxgtVWK.png)
+
+- Chest
+![Chest](https://i.imgur.com/JR8KOv5.png)
+
+- Trunk
+![Trunk](https://i.imgur.com/qV0ZNao.png)
 
 # Credits
-Base on [Trsak's inventory](https://github.com/Trsak/esx_inventoryhud)
+Based on [Trsak's inventory](https://github.com/Trsak/esx_inventoryhud)
