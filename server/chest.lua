@@ -1,5 +1,25 @@
 local Chests = {}
 
+local function getChestMaxWeight(id)
+    local s = splitString(id, ":")
+    local type = s[1]
+    if type == "trunk" then
+        local vehicle = s[3]
+        local maxWeight = Config.Trunks[vehicle]
+        if maxWeight ~= nil then
+            return maxWeight
+        end
+    elseif type == "chest" then
+        local chestId = s[2]
+        local maxWeight = Config.Chests[chestId].maxWeight
+        if maxWeight ~= nil then
+            return maxWeight
+        end
+    end
+
+    return Config.DefaultChestMaxWeight
+end
+
 function vRPin.putIntoChest(idname, amount)
     local user_id = vRP.getUserId({source})
     local chestname = openInventories[user_id]
@@ -7,7 +27,7 @@ function vRPin.putIntoChest(idname, amount)
     if chestname ~= nil then
         local items = Chests[chestname] or {}
         local new_weight = vRP.computeItemsWeight({items})+vRP.getItemWeight({idname})*amount
-        if new_weight <= Config.ChestMaxWeight then
+        if new_weight <= getChestMaxWeight(chestname) then
             if amount >= 0 and vRP.tryGetInventoryItem({user_id, idname, amount, true}) then
                 local citem = items[idname]
 
@@ -61,7 +81,7 @@ end
 function vRPin.getChestItems(chestname, player)
     if Chests[chestname] then
         local weight = vRP.computeItemsWeight({Chests[chestname]})
-        local max_weight = Config.ChestMaxWeight
+        local max_weight = getChestMaxWeight(chestname)
         local items = {}
         for k,v in pairs(Chests[chestname]) do
             local item_name,description = vRP.getItemDefinition({k})
@@ -78,7 +98,7 @@ function vRPin.getChestItems(chestname, player)
             local rawItems = json.decode(cdata) or {}
             local items = {}
             local weight = vRP.computeItemsWeight({rawItems})
-            local max_weight = Config.ChestMaxWeight
+            local max_weight = getChestMaxWeight(chestname)
             for k,v in pairs(rawItems) do
                 local item_name,description = vRP.getItemDefinition({k})
                 table.insert(items, {

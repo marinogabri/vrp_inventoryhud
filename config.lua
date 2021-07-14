@@ -1,6 +1,6 @@
 Config = {}
 
-Config.ChestMaxWeight = 100
+Config.DefaultChestMaxWeight = 100
 Config.ChestSaveTime = 5 -- in minutes
 
 Config.Chests = {
@@ -11,6 +11,10 @@ Config.Chests = {
             z=29.75318145752,
         }, 
         permission = "police.vehicle",
-        maxWeight = 100 
+        maxWeight = 50 
     },
+}
+
+Config.Trunks = {
+    ["sultanrs"] = 30
 }
