@@ -28,6 +28,8 @@ window.addEventListener("message", function (event) {
         $(".item").remove();
         $("#otherInventory").html("<div id=\"noSecondInventoryMessage\"></div>");
         $("#noSecondInventoryMessage").html("Second inventory is not available");
+        $("#playerInfo").hide();
+        $("#otherInfo").hide();
     } else if (event.data.action == "setType") {
         type = event.data.type;
     } else if (event.data.action == "setItems") {
@@ -85,7 +87,8 @@ window.addEventListener("message", function (event) {
             $("#description").hide();
 
             if (itemData !== undefined && itemData.name !== undefined) {
-                $(this).css('background-image', 'url(\'img/' + itemData.name + '.png\'');
+                image = setImage(itemData);
+                $(this).css('background-image', 'url(\'img/' + image + '.png\'');
                 $("#drop").removeClass("disabled");
                 $("#use").removeClass("disabled");
                 $("#give").removeClass("disabled");
@@ -106,8 +109,9 @@ function inventorySetup(items, weight, maxWeight) {
     $("#playerInfo").show();
     $.each(items, function (index, item) {
         count = setCount(item, false);
+        image = setImage(item);
 
-        $("#playerInventory").append('<div class="slot"><div id="item-' + index + '" class="item" style = "background-image: url(\'img/' + item.name + '.png\')">' +
+        $("#playerInventory").append('<div class="slot"><div id="item-' + index + '" class="item" style = "background-image: url(\'img/' + image + '.png\')">' +
             '<div class="item-count">' + count + '</div> <div class="item-name">' + item.label + '</div> </div ><div class="item-name-bg"></div></div>');
         $('#item-' + index).data('item', item);
         $('#item-' + index).data('inventory', "main");
@@ -120,8 +124,9 @@ function secondInventorySetup(items, weight, maxWeight) {
     $("#otherInfo").show();
     $.each(items, function (index, item) {
         count = setCount(item, true);
+        image = setImage(item);
 
-        $("#otherInventory").append('<div class="slot"><div id="itemOther-' + index + '" class="item" style = "background-image: url(\'img/' + item.name + '.png\')">' +
+        $("#otherInventory").append('<div class="slot"><div id="itemOther-' + index + '" class="item" style = "background-image: url(\'img/' + image + '.png\')">' +
             '<div class="item-count">' + count + '</div> <div class="item-name">' + item.label + '</div> </div ><div class="item-name-bg"></div></div>');
         $('#itemOther-' + index).data('item', item);
         $('#itemOther-' + index).data('inventory', "second");
@@ -164,29 +169,25 @@ function disableInventory(ms) {
     }
 }
 
+function setImage(item) {
+    let image = item.name;
+    let split = item.name.split("|");
+
+    if (split[0] == "wbody") {
+        image = split[1];
+    } else if(split[0] == "wammo") {
+        image = "ammo";
+    }
+
+    return image;
+}
+
 function setCount(item, second) {
     if (second && type === "shop") {
         return "$" + formatMoney(item.price);
     }
 
     count = item.count
-
-    if (item.limit > 0) {
-        count = item.count + " / " + item.limit;
-    }
-
-
-    if (item.type === "item_weapon") {
-        if (count == 0) {
-            count = "";
-        } else {
-            count = '<img src="img/bullet.png" class="ammoIcon"> ' + item.count;
-        }
-    }
-
-    if (item.type === "item_account" || item.type === "item_money") {
-        count = formatMoney(item.count);
-    }
 
     return count;
 }
