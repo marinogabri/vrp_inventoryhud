@@ -70,20 +70,15 @@ window.addEventListener("message", function (event) {
             itemData = $(this).data("item");
             $("#description").show();
             $("#description").html(itemData.description);
-            // console.log(itemData.description)
-
 
             $(this).css('background-image', 'none');
-            // itemInventory = $(this).data("inventory");
+            itemInventory = $(this).data("inventory");
 
-            // if (itemInventory == "second" || !itemData.canRemove) {
-            //     $("#drop").addClass("disabled");
-            //     $("#give").addClass("disabled");
-            // }
-
-            // if (itemInventory == "second" || !itemData.usable) {
-            //     $("#use").addClass("disabled");
-            // }
+            if (itemInventory == "second") {
+                $("#drop").addClass("disabled");
+                $("#give").addClass("disabled");
+                $("#use").addClass("disabled");
+            }
         },
         stop: function () {
             itemData = $(this).data("item");
@@ -227,9 +222,9 @@ $(document).ready(function () {
         drop: function (event, ui) {
             itemData = ui.draggable.data("item");
 
-            // if (itemData == undefined || itemData.usable == undefined) {
-            //     return;
-            // }
+            if (itemData == undefined) {
+                return;
+            }
 
             itemInventory = ui.draggable.data("inventory");
 
@@ -237,21 +232,19 @@ $(document).ready(function () {
                 return;
             }
 
-            // if (itemData.usable) {
-                disableInventory(300);
-                $.post("http://vrp_inventoryhud/UseItem", JSON.stringify({
-                    item: itemData
-                }));
-            // }
+            disableInventory(300);
+            $.post("http://vrp_inventoryhud/UseItem", JSON.stringify({
+                item: itemData
+            }));
         }
     });
 
     $('#playerInventory').on('dblclick', '.item', function () {
         itemData = $(this).data("item");
 
-        // if (itemData == undefined || itemData.usable == undefined) {
-            // return;
-        // }
+        if (itemData == undefined) {
+            return;
+        }
 
         itemInventory = $(this).data("inventory");
 
@@ -259,12 +252,10 @@ $(document).ready(function () {
             return;
         }
 
-        // if (itemData.usable) {
-            disableInventory(300);
-            $.post("http://vrp_inventoryhud/UseItem", JSON.stringify({
-                item: itemData
-            }));
-        // }
+        disableInventory(300);
+        $.post("http://vrp_inventoryhud/UseItem", JSON.stringify({
+            item: itemData
+        }));
     });
 
     $('#give').droppable({
@@ -272,9 +263,9 @@ $(document).ready(function () {
         drop: function (event, ui) {
             itemData = ui.draggable.data("item");
 
-            // if (itemData == undefined || itemData.canRemove == undefined) {
-                // return;
-            // }
+            if (itemData == undefined) {
+                return;
+            }
 
             itemInventory = ui.draggable.data("inventory");
 
@@ -282,16 +273,14 @@ $(document).ready(function () {
                 return;
             }
 
-            // if (itemData.canRemove) {
-                disableInventory(300);
-                // $.post("http://vrp_inventoryhud/GetNearPlayers", JSON.stringify({
-                //     item: itemData
-                // }));
-                $.post("http://vrp_inventoryhud/GiveItem", JSON.stringify({
-                    item: itemData,
-                    number: parseInt($("#count").val())
-                }));
-            // }
+            disableInventory(300);
+            // $.post("http://vrp_inventoryhud/GetNearPlayers", JSON.stringify({
+            //     item: itemData
+            // }));
+            $.post("http://vrp_inventoryhud/GiveItem", JSON.stringify({
+                item: itemData,
+                number: parseInt($("#count").val())
+            }));
         }
     });
 
@@ -300,9 +289,9 @@ $(document).ready(function () {
         drop: function (event, ui) {
             itemData = ui.draggable.data("item");
 
-            // if (itemData == undefined || itemData.canRemove == undefined) {
-                // return;
-            // }
+            if (itemData == undefined) {
+                return;
+            }
 
             itemInventory = ui.draggable.data("inventory");
 
@@ -310,13 +299,11 @@ $(document).ready(function () {
                 return;
             }
 
-            // if (itemData.canRemove) {
-                disableInventory(300);
-                $.post("http://vrp_inventoryhud/DropItem", JSON.stringify({
-                    item: itemData,
-                    number: parseInt($("#count").val())
-                }));
-            // }
+            disableInventory(300);
+            $.post("http://vrp_inventoryhud/DropItem", JSON.stringify({
+                item: itemData,
+                number: parseInt($("#count").val())
+            }));
         }
     });
 

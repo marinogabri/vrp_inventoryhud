@@ -159,7 +159,7 @@ local function create_chest(user_id,player,name,position,permission)
 		openInventories[user_id] = nil
 	end
 	
-	vRPclient.setNamedMarker(player,{id,position.x,position.y,position.z-1,0.7,0.7,0.5,0,148,255,125,150})
+	vRPclient.addMarker(player,{position.x,position.y,position.z-1,0.7,0.7,0.5,0,255,125,125,150})
 	vRP.setArea({player,id,position.x,position.y,position.z,1,1.5,chest_enter,chest_leave})
 end
 
