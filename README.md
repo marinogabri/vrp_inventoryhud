@@ -20,6 +20,12 @@ Drag and drop inventory hud for vRP 1
         TriggerClientEvent("removeBackpack", player)
     end
 ```
+* Go to `vrp/modules/inventory.lua` and delete lines 168-169:
+
+```lua
+    choices[lang.inventory.give.title()] = {function(player,choice) ch_give(idname, player, choice) end, lang.inventory.give.description()}
+    choices[lang.inventory.trash.title()] = {function(player, choice) ch_trash(idname, player, choice) end, lang.inventory.trash.description()}
+```
 
 # Features
 - Drag and drop
