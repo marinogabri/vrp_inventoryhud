@@ -34,6 +34,7 @@ Drag and drop inventory hud for vRP 1
 - Chest support
 - Trunks are now avaible! Press F1 near your personal vehicle and the trunk will open. You can also ask to open the trunk to the nearest player!
 - Shops are now avaible!
+- You can now search items. Only avaible in the secondary inventory 
 - COMING SOON Loot players support
 
 # Preview
