@@ -57,6 +57,13 @@
     font-size: 18px;
 }
 
+#search {
+    display: none;
+    border: none;
+    outline: none;
+    font-size: 12px;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;

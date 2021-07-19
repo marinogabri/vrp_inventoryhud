@@ -30,11 +30,13 @@ window.addEventListener("message", function (event) {
         $("#noSecondInventoryMessage").html("Second inventory is not available");
         $("#playerInfo").hide();
         $("#otherInfo").hide();
+        $("#search").hide();
     } else if (event.data.action == "setType") {
         type = event.data.type;
     } else if (event.data.action == "setItems") {
         inventorySetup(event.data.itemList, event.data.weight, event.data.maxWeight);
     } else if (event.data.action == "setSecondInventoryItems") {
+        $("#search").show();
         secondInventorySetup(event.data.itemList, event.data.weight, event.data.maxWeight);
     } else if (event.data.action == "setInfoText") {
         $(".info-div").html(event.data.text);
@@ -210,6 +212,21 @@ $(document).ready(function () {
         if ($(this).val() == "") {
             $(this).val("1")
         }
+    });
+
+    $("#search").on("keyup", function (key) {
+        const query = $("#search").val();
+        const items = $("#otherInventory .slot .item");
+        $.each(items, function (index, item) {
+            const slot = $(item).parent()
+            const data = $(item).data('item')
+            const label = data.label.toLowerCase()
+            if (label.includes(query)) {
+                $(slot).show()
+            } else {
+                $(slot).hide();
+            }
+        });
     });
 
     $("body").on("keyup", function (key) {
