@@ -8,27 +8,21 @@ local isInInventory = false
 
 RegisterCommand('inventory',function()
     if not vRP.isInComa() and not vRP.isHandcuffed() then
-        openInventory()
+        local playerId = PlayerId()
+        local playerSource = GetPlayerServerId(playerId)
+        INserver.inventoryOpened({playerSource})
     end
 end)
 RegisterKeyMapping('inventory', 'Open Inventory', 'keyboard', 'F1')
 
-function openInventory(skip)
+function vRPin.openInventory(type)
     vRPin.loadPlayerInventory()
     isInInventory = true
     SendNUIMessage({
         action = "display",
-        type = "normal" 
+        type = type 
     })
     SetNuiFocus(true, true)
-
-    if not skip then
-        -- check if there is a trunk to open
-        local ok, vtype, name = vRP.getNearestOwnedVehicle({5})
-        if ok then
-            INserver.openTrunk({name})
-        end
-    end
 end
 
 function closeInventory()
@@ -64,7 +58,9 @@ RegisterNUICallback("GiveItem", function(data, cb)
 end)
 
 function vRPin.loadPlayerInventory()
-    INserver.getInventoryItems({}, function(items, weight, maxWeight)
+    local playerId = PlayerId()
+    local playerSource = GetPlayerServerId(playerId)
+    INserver.getInventoryItems({playerSource}, function(items, weight, maxWeight)
         SendNUIMessage({
             action = "setItems",
             itemList = items,
@@ -81,20 +77,6 @@ function vRPin.setSecondInventoryItems(items, weight, maxWeight)
         weight = weight,
         maxWeight = maxWeight
     })
-end
-
-function vRPin.openSecondInventory(type)
-    openInventory(true)
-    isInInventory = true
-
-    SendNUIMessage(
-        {
-            action = "display",
-            type = type
-        }
-    )
-
-    SetNuiFocus(true, true)
 end
 
 Citizen.CreateThread(function()

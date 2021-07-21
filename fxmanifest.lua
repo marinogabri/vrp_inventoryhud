@@ -6,20 +6,22 @@ author 'justgabri'
 ui_page 'html/ui.html'
 
 client_scripts {
-  "lib/Tunnel.lua",
-  "lib/Proxy.lua",
+  'lib/Tunnel.lua',
+  'lib/Proxy.lua',
   'config.lua',
   'client/main.lua',
   'client/chest.lua',
-  'client/shop.lua'
+  'client/shop.lua',
+  'client/player.lua'
 }
 
 server_scripts {
-  "@vrp/lib/utils.lua",
+  '@vrp/lib/utils.lua',
   'config.lua',	
   'server/main.lua',
   'server/chest.lua',
-  'server/shop.lua'
+  'server/shop.lua',
+  'server/player.lua'
 }
 
 files {

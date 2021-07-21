@@ -115,7 +115,7 @@ function vRPin.getChestItems(chestname, player)
     end
 end
 
-function vRPin.openTrunk(name)
+function openTrunk(player, user_id, name)
     local user_id = vRP.getUserId({source})
     local player = vRP.getUserSource({user_id})    
     local id = "trunk:user-" .. user_id .. ":" .. name
@@ -135,7 +135,6 @@ end
 
 function openChest(user_id, player, id)
     if isChestFree(id) then
-        INclient.openSecondInventory(player, {"chest"})
         openInventories[user_id] = id
         vRPin.getChestItems(id, player)
     else
@@ -150,6 +149,7 @@ local function create_chest(user_id,player,name,position,permission)
 		local user_id = vRP.getUserId({player})
 		if user_id ~= nil then
 			if vRP.hasPermission({user_id, permission}) then
+                INclient.openInventory(player, {"chest"})
                 openChest(user_id, player, id)
 			end
 		end
@@ -192,8 +192,7 @@ vRP.registerMenuBuilder({"main", function(add, data)
             vRPclient.getNearestPlayer(player,{10},function(nplayer)
                 local nuser_id = vRP.getUserId({nplayer})
                 if nuser_id ~= nil then
-                    -- vRPclient.notify(player,{vRP.lang.vehicle.asktrunk.asked()})
-                    vRP.request({nplayer,"A players wants to open your trunk",15,function(nplayer,ok)
+                    vRP.request({nplayer,"A player wants to open your trunk",15,function(nplayer,ok)
                         if ok then -- request accepted, open trunk
                             vRPclient.getNearestOwnedVehicle(nplayer,{7},function(ok,vtype,name)
                                 if ok then

@@ -3,24 +3,28 @@ function vRPin.buyItem(idname, amount)
 	local player = vRP.getUserSource({user_id})
     if user_id ~= nil then
         local shop = openInventories[user_id]
-        local price = Config.Shops[shop].items[idname]
-        local itemWeight = vRP.getItemWeight({idname})
-        local new_weight = vRP.getInventoryWeight({user_id})+itemWeight*amount
-        if new_weight <= vRP.getInventoryMaxWeight({user_id}) then
-            if vRP.tryPayment({user_id,amount*price}) then
-                vRP.giveInventoryItem({user_id,idname,amount,true})
-                INclient.loadPlayerInventory(player)
+        if shop ~= nil then
+            local price = Config.Shops[shop].items[idname]
+            local itemWeight = vRP.getItemWeight({idname})
+            local new_weight = vRP.getInventoryWeight({user_id})+itemWeight*amount
+            if new_weight <= vRP.getInventoryMaxWeight({user_id}) then
+                if vRP.tryPayment({user_id,amount*price}) then
+                    vRP.giveInventoryItem({user_id,idname,amount,true})
+                    INclient.loadPlayerInventory(player)
+                else
+                    vRPclient.notify(player,{"~r~Not enough money"})
+                end
             else
-                vRPclient.notify(player,{"~r~Not enough money"})
+                vRPclient.notify(player,{"~r~Inventory is full"})
             end
         else
-            vRPclient.notify(player,{"~r~Inventory is full"})
+            vRPclient.notify(player,{"~r~Error. Close and open the shop again."})
         end
     end
 end
 
 function openShop(user_id, player, shop)
-    INclient.openSecondInventory(player, {"shop"})
+    INclient.openInventory(player, {"shop"})
     openInventories[user_id] = shop
     local items = {}
 
