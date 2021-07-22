@@ -10,6 +10,7 @@ vRP = Proxy.getInterface("vRP")
 vRPclient = Tunnel.getInterface("vRP","vrp_inventoryhud")
 
 openInventories = {}
+Hotbars = {}
 
 PerformHttpRequest("https://raw.githubusercontent.com/marinogabri/vrp_inventoryhud/master/version",function(err,newVersion,headers)
 	if err == 200 then
@@ -71,6 +72,66 @@ function vRPin.requestItemDrop(idname, amount)
 	end
 end
 
+function vRPin.requestPutHotbar(idname, amount, slot, from)
+	local user_id = vRP.getUserId({source})
+	local player = vRP.getUserSource({user_id})
+	if user_id ~= nil then
+		if from ~= nil then
+			Hotbars[user_id][from] = nil
+		end
+
+		Hotbars[user_id][slot] = idname
+
+		INclient.loadPlayerInventory(player)
+	end
+end
+
+function vRPin.requestRemoveHotbar(slot)
+	local user_id = vRP.getUserId({source})
+	local player = vRP.getUserSource({user_id})
+	if user_id ~= nil then
+		Hotbars[user_id][slot] = nil
+		INclient.loadPlayerInventory(player)
+	end
+end
+
+function vRPin.useHotbarItem(slot)
+	local user_id = vRP.getUserId({source})
+	local player = vRP.getUserSource({user_id})
+	if user_id ~= nil and Hotbars[user_id] ~= nil then
+		local idname = Hotbars[user_id][slot]
+		if idname ~= nil then
+			vRPin.requestItemUse(idname)
+			local amount = vRP.getInventoryItemAmount({user_id,idname})
+			if amount < 1 then
+				Hotbars[user_id][slot] = nil
+			end
+		end
+	end
+end
+
+function vRPin.getHotbarItems(player)
+	local user_id = vRP.getUserId({player})
+	if user_id ~= nil then
+		local hotbarItems = {}
+		if Hotbars[user_id] ~= nil then
+			for slot, idname in pairs(Hotbars[user_id]) do
+				local item_name, description = vRP.getItemDefinition({idname})
+				local amount = vRP.getInventoryItemAmount({user_id,idname})
+				table.insert(hotbarItems, {
+					label = item_name,
+					count = amount,
+					description = description,
+					name = idname,
+					slot = slot
+				})
+			end
+		end
+
+		return hotbarItems
+	end
+end
+
 function vRPin.closeInventory()
 	openInventories[vRP.getUserId({source})] = nil
 end
@@ -78,11 +139,6 @@ end
 function vRPin.inventoryOpened(player)
 	local user_id = vRP.getUserId({player})
 	if user_id ~= nil then
-		-- local currentArea = Areas[user_id]
-		-- if currentArea ~= nil then
-
-		-- end
-
 		vRPclient.getNearestOwnedVehicle(player,{2},function(ok,vtype,name)
 			if ok then
 				INclient.openInventory(player, {'chest'})
@@ -114,16 +170,40 @@ function vRPin.getInventoryItems(player)
 	local weight = vRP.getInventoryWeight({user_id})
 	local max_weight = vRP.getInventoryMaxWeight({user_id})
 	local items = {}
+	local hotbarItems = {}
+
+	if Hotbars[user_id] == nil then
+		Hotbars[user_id] = {}
+	end
+
 	for k,v in pairs(data.inventory) do 
-		local item_name,description = vRP.getItemDefinition({k})
-        if item_name ~= nil then
-			table.insert(items, {
-				label = item_name,
-				count = v.amount,
-				description = description,
-				name = k
-			})
+		local item_name, description = vRP.getItemDefinition({k})
+		local found = false
+
+		if item_name ~= nil then
+			for slot, idname in pairs(Hotbars[user_id]) do
+				if idname == k then
+					found = true
+					table.insert(hotbarItems, {
+						label = item_name,
+						count = v.amount,
+						description = description,
+						name = idname,
+						slot = slot
+					})
+				end
+			end
+
+			if not found then
+				table.insert(items, {
+					label = item_name,
+					count = v.amount,
+					description = description,
+					name = k
+				})
+			end
         end
     end
-	return items, weight, max_weight
+
+	return items, hotbarItems, weight, max_weight
 end

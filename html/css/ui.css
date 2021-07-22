@@ -84,6 +84,122 @@ input[type=number] {
     border-radius: 8px;
 }
 
+#playerInventory > .slot:nth-child(1):after {
+	top: 0;
+	left: 0;
+	margin: 0 auto;
+	position: absolute;
+	content: '1';
+	height: 15px !important;
+	width: 15px !important;
+	font-size: 11px;
+	font-weight: bold;
+	font-family: "Signika";
+	text-align: center;
+	line-height: 14px;
+	vertical-align: middle;
+	background-color: white;
+	color: black;
+	text-shadow: none;
+	outline: 1px solid rgba(0,0,0,0.9);
+	outline-offset: -1px;
+}
+
+#playerInventory > .slot:nth-child(2):after {
+	top: 0;
+	left: 0;
+	margin: 0 auto;
+	position: absolute;
+	content: '2';
+	height: 15px !important;
+	width: 15px !important;
+	font-size: 11px;
+	font-weight: bold;
+	font-family: "Signika";
+	text-align: center;
+	line-height: 14px;
+	vertical-align: middle;
+	background-color: white;
+	color: black;
+	text-shadow: none;
+	outline: 1px solid rgba(0,0,0,0.9);
+	outline-offset: -1px;
+}
+
+#playerInventory > .slot:nth-child(3):after {
+	top: 0;
+	left: 0;
+	margin: 0 auto;
+	position: absolute;
+	content: '3';
+	height: 15px !important;
+	width: 15px !important;
+	font-size: 11px;
+	font-weight: bold;
+	font-family: "Signika";
+	text-align: center;
+	line-height: 14px;
+	vertical-align: middle;
+	background-color: white;
+	color: black;
+	text-shadow: none;
+	outline: 1px solid rgba(0,0,0,0.9);
+	outline-offset: -1px;
+}
+
+#playerInventory > .slot:nth-child(4):after {
+	top: 0;
+	left: 0;
+	margin: 0 auto;
+	position: absolute;
+	content: '4';
+	height: 15px !important;
+	width: 15px !important;
+	font-size: 11px;
+	font-weight: bold;
+	font-family: "Signika";
+	text-align: center;
+	line-height: 14px;
+	vertical-align: middle;
+	background-color: white;
+	color: black;
+	text-shadow: none;
+	outline: 1px solid rgba(0,0,0,0.9);
+	outline-offset: -1px;
+}
+
+#playerInventory > .slot:nth-child(5):after {
+	top: 0;
+	left: 0;
+	margin: 0 auto;
+	position: absolute;
+	content: '5';
+	height: 15px !important;
+	width: 15px !important;
+	font-size: 11px;
+	font-weight: bold;
+	font-family: "Signika";
+	text-align: center;
+	line-height: 14px;
+	vertical-align: middle;
+	background-color: white;
+	color: black;
+	text-shadow: none;
+	outline: 1px solid rgba(0,0,0,0.9);
+	outline-offset: -1px;
+}
+
+#hotbar {
+	height: 110px;
+	min-width: 110px;
+	width: fit-content;
+	position: absolute;
+	left: 50%;
+	bottom: 3%;
+	transform: translate(-50%, 0%);
+	/* overflow: hidden; */
+}
+
 .slot:hover {
     background-color: rgba(10, 10, 10, 0.65);
 }

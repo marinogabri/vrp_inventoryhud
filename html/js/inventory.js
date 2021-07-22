@@ -34,12 +34,14 @@ window.addEventListener("message", function (event) {
     } else if (event.data.action == "setType") {
         type = event.data.type;
     } else if (event.data.action == "setItems") {
-        inventorySetup(event.data.itemList, event.data.weight, event.data.maxWeight);
+        inventorySetup(event.data.itemList, event.data.hotbarItems, event.data.weight, event.data.maxWeight);
     } else if (event.data.action == "setSecondInventoryItems") {
         $("#search").show();
         secondInventorySetup(event.data.itemList, event.data.weight, event.data.maxWeight);
     } else if (event.data.action == "setInfoText") {
         $(".info-div").html(event.data.text);
+    } else if (event.data.action == "showHotbar") {
+        showHotbar(event.data.hotbarItems)
     } else if (event.data.action == "nearPlayers") {
         $("#nearPlayers").html("");
 
@@ -105,16 +107,83 @@ function closeInventory() {
     }));
 }
 
-function inventorySetup(items, weight, maxWeight) {
-    $("#playerInventory").html("");
-    $("#playerInfo").html(weight + "/" + maxWeight + " KG");
-    $("#playerInfo").show();
-    $.each(items, function (index, item) {
+function showHotbar(hotbarItems) {
+    $("#hotbar").fadeIn(200);
+    for(i = 1; i < 6; i++) {
+        $("#hotbar").append('<div class="slot" data-hotbar="' + i + '"></div>');
+    }
+
+    $.each(hotbarItems, function (index, item) {
+        console.log(item.name)
         count = setCount(item, false);
         image = setImage(item);
 
+        $("#hotbar").find("[data-hotbar=" + item.slot + "]").html('<div id="item-' + item.slot + '" class="item" style = "background-image: url(\'img/' + image + '.png\')">' +
+        '<div class="item-count">' + count + '</div> <div class="item-name">' + item.label + '</div> </div ><div class="item-name-bg"></div>');
+    });
+
+    setTimeout(function() {
+        $.when($("#hotbar").fadeOut(1000)).done(function() {
+            $("#hotbar").html('')
+        });
+    }, 1000);
+}
+
+function inventorySetup(items, hotbarItems, weight, maxWeight) {
+    $("#playerInventory").html("");
+    $("#playerInfo").html(weight + "/" + maxWeight + " KG");
+    $("#playerInfo").show();
+
+    for(let i=1; i<6; i++) {
+        // $("#playerInventory").append('<div class="slot" data-slot="' + i + '" data-type="main"><div class="item-key">' + i + '</div></div>');
+        $("#playerInventory").append('<div class="slot" id="hotbar-' + i + '" data-hotbar="' + i + '"></div>');
+    
+        const id = "#hotbar-" + i
+        $(id).droppable({
+            hoverClass: 'hoverControl',
+            drop: function (event, ui) {
+                console.log("dropped into: " + i + " from: " + itemData.slot)
+                itemData = ui.draggable.data("item");
+    
+                if (itemData == undefined) {
+                    return;
+                }
+    
+                itemInventory = ui.draggable.data("inventory");
+                
+                if (itemInventory == undefined || itemInventory == "second") {
+                    return;
+                }
+                
+                disableInventory(300);
+                $.post("http://vrp_inventoryhud/PutIntoHotbar", JSON.stringify({
+                    item: itemData,
+                    number: parseInt($("#count").val()),
+                    slot: i,
+                    from: itemData.slot
+                }));
+            }
+        });
+    }
+
+    $.each(hotbarItems, function (index, item) {
+        count = setCount(item, false);
+        image = setImage(item);
+
+        $("#playerInventory").find("[data-hotbar=" + item.slot + "]").html('<div id="item-' + item.slot + '" class="item" style = "background-image: url(\'img/' + image + '.png\')">' +
+        '<div class="item-count">' + count + '</div> <div class="item-name">' + item.label + '</div> </div ><div class="item-name-bg"></div>');
+
+        $('#item-' + item.slot).data('item', item);
+        $('#item-' + item.slot).data('inventory', "hotbar");
+    });
+
+    $.each(items, function (index, item) {
+        count = setCount(item, false);
+        image = setImage(item);
+        index += 6;
+        
         $("#playerInventory").append('<div class="slot"><div id="item-' + index + '" class="item" style = "background-image: url(\'img/' + image + '.png\')">' +
-            '<div class="item-count">' + count + '</div> <div class="item-name">' + item.label + '</div> </div ><div class="item-name-bg"></div></div>');
+        '<div class="item-count">' + count + '</div> <div class="item-name">' + item.label + '</div> </div ><div class="item-name-bg"></div></div>');
         $('#item-' + index).data('item', item);
         $('#item-' + index).data('inventory', "main");
     });
@@ -354,7 +423,13 @@ $(document).ready(function () {
                     item: itemData,
                     number: parseInt($("#count").val())
                 }));
+            } else if (itemInventory === "hotbar") {
+                disableInventory(500);
+                $.post("http://vrp_inventoryhud/TakeFromHotbar", JSON.stringify({
+                    slot: itemData.slot
+                }));
             }
+
         }
     });
 

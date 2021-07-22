@@ -1,6 +1,9 @@
 # vrp_inventoryhud
 Drag and drop inventory hud for vRP 1
 
+You can support me on buy me a coffee.
+[<img src="https://i.imgur.com/GfsNHfa.png" width="200" />](https://www.buymeacoffee.com/marinogabri)
+
 # Installation
 
 ### Requirements:
@@ -28,6 +31,7 @@ Drag and drop inventory hud for vRP 1
 ```
 
 # Features
+- Hotbar
 - Drag and drop
 - Well coded
 - Secure
@@ -36,20 +40,22 @@ Drag and drop inventory hud for vRP 1
 - Shops are now avaible!
 - You can now search items. Only avaible in the secondary inventory 
 - Now you can loot in coma players by pressing F1!
-- COMING SOON: Hotbar
 
 # Preview
 - Inventory
-![Inventory](https://i.imgur.com/dxgtVWK.png)
+![Inventory](https://i.imgur.com/442Prp7.png)
+
+- Hotbar
+![Hotbar](https://i.imgur.com/cLVHPOi.png)
 
 - Chest
-![Chest](https://i.imgur.com/JR8KOv5.png)
+![Chest](https://i.imgur.com/EGC3Wpc.png)
 
 - Trunk
-![Trunk](https://i.imgur.com/qV0ZNao.png)
+![Trunk](https://i.imgur.com/F32J52H.png)
 
 - Shop
-![Shop](https://i.imgur.com/dibpc81.png)
+![Shop](https://i.imgur.com/y2y5tSi.png)
 
 # Credits
 Based on [Trsak's inventory](https://github.com/Trsak/esx_inventoryhud)
