@@ -54,12 +54,18 @@ end
 function vRPin.requestItemUse(idname)
 	local user_id = vRP.getUserId({source})
 	local player = vRP.getUserSource({user_id})
-	local choice = vRP.getItemChoices({idname})
-	for key, value in pairs(choice) do 
-		if key ~= "Give" and key ~= "Trash" then
-			local cb = value[1]
-			cb(player,key)
-			INclient.loadPlayerInventory(player)
+	
+	if string.find(idname, "WEAPON_") then
+		local ammo = vRP.getInventoryItemAmount({user_id, "ammo"})
+		INclient.equipWeapon(player, {idname, ammo})
+	else
+		local choice = vRP.getItemChoices({idname})
+		for key, value in pairs(choice) do 
+			if key ~= "Give" and key ~= "Trash" then
+				local cb = value[1]
+				cb(player,key)
+				INclient.loadPlayerInventory(player)
+			end
 		end
 	end
 end
@@ -206,4 +212,9 @@ function vRPin.getInventoryItems(player)
     end
 
 	return items, hotbarItems, weight, max_weight
+end
+
+-- Define items
+for k,v in pairs(Config.Items) do
+	vRP.defInventoryItem({k,v[1],v[2],v[3],v[4]})
 end

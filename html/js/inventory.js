@@ -142,7 +142,6 @@ function inventorySetup(items, hotbarItems, weight, maxWeight) {
         $(id).droppable({
             hoverClass: 'hoverControl',
             drop: function (event, ui) {
-                console.log("dropped into: " + i + " from: " + itemData.slot)
                 itemData = ui.draggable.data("item");
     
                 if (itemData == undefined) {
