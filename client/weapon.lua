@@ -2,7 +2,8 @@ local currentWeapon = nil
 
 function vRPin.equipWeapon(weapon)
     local ped = PlayerPedId()
-    if currentWeapon == weapon then
+    local selectedWeapon = GetSelectedPedWeapon(ped)
+    if currentWeapon == weapon and not (selectedWeapon == GetHashKey('WEAPON_UNARMED')) then
         vRP.playAnim({true,{{"reaction@intimidation@1h","outro",1}},false})
         Citizen.Wait(1600)
         ClearPedTasks(ped)
@@ -36,3 +37,18 @@ RegisterCommand('reload',function()
     end
 end)
 RegisterKeyMapping('reload', 'Reload your weapon', 'keyboard', 'R')
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(100)
+        if currentWeapon ~= nil then
+            local ped = PlayerPedId()
+            local currentAmmo = GetAmmoInPedWeapon(ped, GetHashKey(currentWeapon))
+            if currentAmmo < 1 then
+                GiveWeaponToPed(ped, GetHashKey(currentWeapon), 0, false, true)
+            end
+        else
+            Citizen.Wait(1600)
+        end
+    end
+end)

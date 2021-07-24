@@ -5,6 +5,7 @@ INserver = Tunnel.getInterface("vrp_inventoryhud","vrp_inventoryhud")
 vRP = Proxy.getInterface("vRP")
 
 local isInInventory = false
+local isInHotbar = false
 
 RegisterCommand('inventory',function()
     if not vRP.isInComa() and not vRP.isHandcuffed() then
@@ -23,14 +24,21 @@ for i=1, 5 do
 end
 
 RegisterCommand('hotbar',function()
-    local playerId = PlayerId()
-    local playerSource = GetPlayerServerId(playerId)
-    INserver.getHotbarItems({playerSource}, function(hotbarItems)
-        SendNUIMessage({
-            action = "showHotbar",
-            hotbarItems = hotbarItems
-        })
-    end)
+    if not isInHotbar and not isInInventory then
+        local playerId = PlayerId()
+        local playerSource = GetPlayerServerId(playerId)
+        INserver.getHotbarItems({playerSource}, function(hotbarItems)
+            SendNUIMessage({
+                action = "showHotbar",
+                hotbarItems = hotbarItems
+            })
+        end)
+
+        isInHotbar = true
+        SetTimeout(2000, function()
+            isInHotbar = false
+        end)
+    end
 end)
 RegisterKeyMapping('hotbar', 'Check your hotbar items', 'keyboard', 'TAB')
 
@@ -110,8 +118,12 @@ function vRPin.setSecondInventoryItems(items, weight, maxWeight)
 end
 
 Citizen.CreateThread(function()
-    SetWeaponsNoAutoswap(1)
-    RemoveAllPedWeapons(PlayerPedId(), true)
+    local ped = PlayerPedId()
+    RemoveAllPedWeapons(ped, true)
+	SetPedConfigFlag(ped, 48, 1)
+	SetPedCanSwitchWeapon(ped, 0)
+	SetWeaponsNoAutoreload(1)
+	SetWeaponsNoAutoswap(1)
     while true do
         Citizen.Wait(1)
         DisableControlAction(0, 37, true) -- TAB
