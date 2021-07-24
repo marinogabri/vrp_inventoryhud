@@ -110,9 +110,13 @@ function vRPin.setSecondInventoryItems(items, weight, maxWeight)
 end
 
 Citizen.CreateThread(function()
+    SetWeaponsNoAutoswap(1)
+    RemoveAllPedWeapons(PlayerPedId(), true)
     while true do
         Citizen.Wait(1)
         DisableControlAction(0, 37, true) -- TAB
+        DisableControlAction(0, 45, true) -- R
+        DisableControlAction(0, 140, true) -- Melee attack
         if isInInventory then
             DisableAllControlActions(0)
         end

@@ -1,6 +1,6 @@
 local currentWeapon = nil
 
-function vRPin.equipWeapon(weapon, ammo)
+function vRPin.equipWeapon(weapon)
     local ped = PlayerPedId()
     if currentWeapon == weapon then
         vRP.playAnim({true,{{"reaction@intimidation@1h","outro",1}},false})
@@ -14,32 +14,25 @@ function vRPin.equipWeapon(weapon, ammo)
         Citizen.Wait(1600)
         ClearPedTasks(ped)
         GiveWeaponToPed(ped, GetHashKey(weapon), 0, false, true)
-        -- SetPedAmmo(ped, GetHashKey(weapon), ammo)
     end
 end
 
-function vRPin.setAmmo(ammo)
-    local ped = PlayerPedId()
-    -- local currentAmmo = GetAmmoInPedWeapon(ped, GetHashKey(currentWeapon))
-    -- local newAmmo = currentAmmo + ammo
-    SetPedAmmo(ped, GetHashKey(currentWeapon), ammo)
-end
+RegisterCommand('reload',function()
+    if currentWeapon ~= nil then
+        local playerId = PlayerId()
+        local playerSource = GetPlayerServerId(playerId)
+        local ped = PlayerPedId()
+        local magazineSize = GetMaxAmmoInClip(ped, GetHashKey(currentWeapon))
+        local currentAmmo = GetAmmoInPedWeapon(ped, GetHashKey(currentWeapon))
 
--- Citizen.CreateThread(function()
---     while true do
---         Citizen.Wait(100)
---         if currentWeapon.weapon ~= nil then
---             -- print("yes ")
---             local ammo = GetAmmoInPedWeapon(PlayerPedId(), GetHashKey(currentWeapon.weapon))
---             if ammo ~= currentWeapon.ammo then
---                 print(ammo, currentWeapon.ammo)
---                 local playerId = PlayerId()
---                 local playerSource = GetPlayerServerId(playerId)
---                 INserver.updateAmmo({playerSource, ammo})
---                 currentWeapon.ammo = ammo
---             end
---         else
---             Citizen.Wait(500)
---         end
---     end
--- end)
+        if currentAmmo == 0 then
+            INserver.requestReload({playerSource, magazineSize}, function(ammo)
+                if ammo ~= nil then
+                    SetPedAmmo(ped, currentWeapon, ammo)
+                    MakePedReload(ped)
+                end
+            end)
+        end
+    end
+end)
+RegisterKeyMapping('reload', 'Reload your weapon', 'keyboard', 'R')

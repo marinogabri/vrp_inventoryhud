@@ -114,7 +114,6 @@ function showHotbar(hotbarItems) {
     }
 
     $.each(hotbarItems, function (index, item) {
-        console.log(item.name)
         count = setCount(item, false);
         image = setImage(item);
 

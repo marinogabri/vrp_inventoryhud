@@ -54,18 +54,26 @@ end
 function vRPin.requestItemUse(idname)
 	local user_id = vRP.getUserId({source})
 	local player = vRP.getUserSource({user_id})
-	
-	if string.find(idname, "WEAPON_") then
-		local ammo = vRP.getInventoryItemAmount({user_id, "ammo"})
-		INclient.equipWeapon(player, {idname, ammo})
-	else
-		local choice = vRP.getItemChoices({idname})
-		for key, value in pairs(choice) do 
-			if key ~= "Give" and key ~= "Trash" then
-				local cb = value[1]
-				cb(player,key)
-				INclient.loadPlayerInventory(player)
-			end
+	local choice = vRP.getItemChoices({idname})
+	for key, value in pairs(choice) do 
+		if key ~= "Give" and key ~= "Trash" then
+			local cb = value[1]
+			cb(player,key)
+			INclient.loadPlayerInventory(player)
+		end
+	end
+end
+
+function vRPin.requestReload(player, ammo)
+	local user_id = vRP.getUserId({player})
+	if user_id ~= nil then
+		local maxAmmo = vRP.getInventoryItemAmount({user_id, "ammo"})
+		if ammo > maxAmmo then 
+			ammo = maxAmmo
+		end
+
+		if vRP.tryGetInventoryItem({user_id, "ammo", ammo, true}) then
+			return ammo
 		end
 	end
 end

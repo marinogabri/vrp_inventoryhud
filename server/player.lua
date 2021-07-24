@@ -11,7 +11,7 @@ end
 
 function loadTargetInventory(player, user_id, target)
     -- local target_id = vRP.getUserId({target})
-    local items, weight, maxWeight = vRPin.getInventoryItems(target)
+    local items, hotbarItems, weight, maxWeight = vRPin.getInventoryItems(target)
     -- INclient.openInventory(player, {"player"})
     INclient.setSecondInventoryItems(player, {items, weight, maxWeight})
     openInventories[user_id] = "u:" .. target
