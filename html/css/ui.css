@@ -4,6 +4,7 @@
     font-family: 'Signika', sans-serif;
     text-transform: uppercase;
     color: white;
+    user-select: none;
 }
 
 .ui {
@@ -197,7 +198,6 @@ input[type=number] {
 	left: 50%;
 	bottom: 3%;
 	transform: translate(-50%, 0%);
-	/* overflow: hidden; */
 }
 
 .slot:hover {

@@ -11,3 +11,7 @@ RegisterNUICallback("TakeFromChest", function(data, cb)
         cb("ok")
     end
 end)
+
+function vRPin.isIsideACar()
+    return IsPedSittingInAnyVehicle(PlayerPedId())
+end

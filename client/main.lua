@@ -18,7 +18,9 @@ RegisterKeyMapping('inventory', 'Open Inventory', 'keyboard', 'F1')
 
 for i=1, 5 do 
     RegisterCommand('slot' .. i,function()
-        INserver.useHotbarItem({i})
+        if not vRP.isInComa() and not vRP.isHandcuffed() then
+            INserver.useHotbarItem({i})
+        end
     end)
     RegisterKeyMapping('slot' .. i, 'Uses the item in slot ' .. i, 'keyboard', i)
 end
@@ -52,17 +54,17 @@ function vRPin.openInventory(type)
     SetNuiFocus(true, true)
 end
 
-function closeInventory()
+function closeInventory(type)
     isInInventory = false
     SendNUIMessage({
         action = "hide"
     })
     SetNuiFocus(false, false)
-    INserver.closeInventory()
+    INserver.closeInventory({type})
 end
 
 RegisterNUICallback("NUIFocusOff", function(data, cb)
-    closeInventory()
+    closeInventory(data.type)
     cb("ok")
 end)
 

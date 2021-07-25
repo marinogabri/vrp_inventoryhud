@@ -62,32 +62,3 @@ function vRPin.takeFromPlayer(idname, amount)
         INclient.loadPlayerInventory(player)
     end
 end
-
--- debug stuff, don't touch
-
--- vRP.registerMenuBuilder({"main", function(add, data)
---     local user_id = vRP.getUserId({data.player})
---     if user_id ~= nil then
---         local choices = {}
---         choices["[Inv] Loot player"] = {function(player, choice)
---             --vRPclient.getNearestPlayer(player,{10},function(nplayer)
---                 --local nuser_id = vRP.getUserId({nplayer})
---                 --if nuser_id ~= nil then
---                     --vRP.request({nplayer,"A player wants to loot you",30,function(nplayer,ok)
---                         --if ok then
---                             INclient.openInventory(player, {'player'})
---                             loadTargetInventory(player, user_id, player)
---                             vRP.closeMenu({player})
---                         --else
---                             --vRPclient.notify(player,{"~r~Player refused"})
---                         --end
---                     --end})
---                 --else
---                     --vRPclient.notify(player,{"~r~No players near you."})
---                 --end
---             --end)
---         end}
-
---         add(choices)
---     end
--- end})

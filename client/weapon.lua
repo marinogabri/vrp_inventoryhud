@@ -10,6 +10,7 @@ function vRPin.equipWeapon(weapon)
         RemoveWeaponFromPed(ped, GetHashKey(weapon))
         currentWeapon = nil
     else
+        RemoveAllPedWeapons(ped, true)
         currentWeapon = weapon
         vRP.playAnim({true,{{"reaction@intimidation@1h","intro",1}},false})
         Citizen.Wait(1600)

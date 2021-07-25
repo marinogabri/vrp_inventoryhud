@@ -146,8 +146,26 @@ function vRPin.getHotbarItems(player)
 	end
 end
 
-function vRPin.closeInventory()
-	openInventories[vRP.getUserId({source})] = nil
+function vRPin.closeInventory(type)
+	local user_id = vRP.getUserId({source})
+
+	-- if type == 'trunk' then
+	-- 	print(type)
+	-- 	local strings = splitString(openInventories[user_id], ":")
+	-- 	local owner_id = splitString(strings[2], "-")[2]
+
+	-- 	print(owner_id)
+	-- 	local ownerSource = vRP.getUserSource({owner_id})
+	-- 	vRPclient.vc_closeDoor(nplayer, {vtype,5})
+
+	-- end
+	
+	vRPclient.stopAnim(source, {false})
+	openInventories[user_id] = nil
+end
+
+function log(...)
+	print(...)
 end
 
 function vRPin.inventoryOpened(player)
@@ -155,8 +173,7 @@ function vRPin.inventoryOpened(player)
 	if user_id ~= nil then
 		vRPclient.getNearestOwnedVehicle(player,{2},function(ok,vtype,name)
 			if ok then
-				INclient.openInventory(player, {'chest'})
-				openTrunk(user_id, player, name)
+				openTrunk(user_id, player, user_id, name, vtype)
 				return
 			end
 		end)
@@ -164,12 +181,15 @@ function vRPin.inventoryOpened(player)
 		vRPclient.getNearestPlayer(player,{2},function(nplayer)
 			local nuser_id = vRP.getUserId({nplayer})
 			if nuser_id ~= nil then
-				vRPclient.isInComa(nplayer,function(inComa)
-					if inComa then
-						INclient.openInventory(player, {'player'})
-						loadTargetInventory(player, user_id, nplayer)
-						return
-					end
+				vRPclient.isInComa(nplayer,{}, function(inComa)
+					vRPclient.isHandcuffed(nplayer,{}, function(isHandcuffed)
+						if inComa or isHandcuffed then
+							INclient.openInventory(player, {'player'})
+							vRPclient.playAnim(player,{true,{{"mini@repair","fixing_a_player",1}},true})
+							loadTargetInventory(player, user_id, nplayer)
+							return
+						end
+					end)
 				end)
 			end
 		end)

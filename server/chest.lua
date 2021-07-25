@@ -115,12 +115,24 @@ function vRPin.getChestItems(chestname, player)
     end
 end
 
-function openTrunk(player, user_id, name)
-    local user_id = vRP.getUserId({source})
-    local player = vRP.getUserSource({user_id})    
-    local id = "trunk:user-" .. user_id .. ":" .. name
+function openTrunk(player, user_id, owner_id, vname, vtype)
+    INclient.isIsideACar(player, {}, function(inside)
+        if not inside then
+            local id = "trunk:user-" .. owner_id .. ":" .. string.lower(vname)
+            -- local ownerSource = vRP.getUserSource({owner_id})
+        
+            vRPclient.playAnim(player,{true,{{"mini@repair","fixing_a_player",1}},true})
+            -- vRPclient.vc_openDoor(ownerSource, {vtype,5})
+        
+            INclient.openInventory(player, {'trunk'})
+            openChest(user_id, player, id)
+        end
+    end)
+end
 
-    openChest(user_id, player, id)
+function closeTrunk(player, user_id)
+    local inv = openInventories[user_id]
+
 end
 
 function isChestFree(id)
@@ -196,8 +208,9 @@ vRP.registerMenuBuilder({"main", function(add, data)
                         if ok then -- request accepted, open trunk
                             vRPclient.getNearestOwnedVehicle(nplayer,{7},function(ok,vtype,name)
                                 if ok then
-                                    local chestname = "trunk:user-" .. nuser_id .. ":" .. string.lower(name)
-                                    openChest(user_id, player, chestname)
+                                    -- local chestname = "trunk:user-" .. nuser_id .. ":" .. string.lower(name)
+                                    -- openChest(user_id, player, chestname)
+                                    openTrunk(player, user_id, nuser_id, name, vtype)
                                 else
                                     vRPclient.notify(player,{"~r~No vehicles near you"})
                                     vRPclient.notify(nplayer,{"~r~No vehicles near you"})
