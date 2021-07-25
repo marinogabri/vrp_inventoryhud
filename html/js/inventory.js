@@ -64,9 +64,10 @@ window.addEventListener("message", function (event) {
 
     $('.item').draggable({
         helper: 'clone',
-        appendTo: 'body',
+        appendTo: '.inventory',
         zIndex: 99999,
         revert: 'invalid',
+        containment: "parent",
         start: function (event, ui) {
             if (disabled) {
                 $(this).stop();
@@ -399,7 +400,7 @@ $(document).ready(function () {
 
             if (type === "trunk" && itemInventory === "second") {
                 disableInventory(500);
-                $.post("http://vrp_inventoryhud/TakeFromTrunk", JSON.stringify({
+                $.post("http://vrp_inventoryhud/TakeFromChest", JSON.stringify({
                     item: itemData,
                     number: parseInt($("#count").val())
                 }));
@@ -427,7 +428,6 @@ $(document).ready(function () {
                     slot: itemData.slot
                 }));
             }
-
         }
     });
 
@@ -438,7 +438,7 @@ $(document).ready(function () {
 
             if (type === "trunk" && itemInventory === "main") {
                 disableInventory(500);
-                $.post("http://vrp_inventoryhud/PutIntoTrunk", JSON.stringify({
+                $.post("http://vrp_inventoryhud/PutIntoChest", JSON.stringify({
                     item: itemData,
                     number: parseInt($("#count").val())
                 }));
