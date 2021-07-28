@@ -132,13 +132,15 @@ function vRPin.getHotbarItems(player)
 			for slot, idname in pairs(Hotbars[user_id]) do
 				local item_name, description = vRP.getItemDefinition({idname})
 				local amount = vRP.getInventoryItemAmount({user_id,idname})
-				table.insert(hotbarItems, {
-					label = item_name,
-					count = amount,
-					description = description,
-					name = idname,
-					slot = slot
-				})
+				if amount > 0 then
+					table.insert(hotbarItems, {
+						label = item_name,
+						count = amount,
+						description = description,
+						name = idname,
+						slot = slot
+					})
+				end
 			end
 		end
 
