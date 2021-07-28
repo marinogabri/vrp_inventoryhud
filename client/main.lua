@@ -52,6 +52,7 @@ function vRPin.openInventory(type)
         type = type 
     })
     SetNuiFocus(true, true)
+    TriggerScreenblurFadeIn(0)
 end
 
 function closeInventory(type)
@@ -61,6 +62,7 @@ function closeInventory(type)
     })
     SetNuiFocus(false, false)
     INserver.closeInventory({type})
+    TriggerScreenblurFadeOut(0)
 end
 
 RegisterNUICallback("NUIFocusOff", function(data, cb)
@@ -77,6 +79,11 @@ RegisterNUICallback("DropItem", function(data, cb)
     if IsPedSittingInAnyVehicle(PlayerPedId()) then return end
     if type(data.number) == "number" and math.floor(data.number) == data.number then
         INserver.requestItemDrop({data.item.name, tonumber(data.number)})
+
+        if currentWeapon == data.item.name then
+            currentWeapon = nil
+            RemoveAllPedWeapons(PlayerPedId(), true)
+        end
     end
     cb("ok")
 end)
@@ -131,6 +138,7 @@ Citizen.CreateThread(function()
         DisableControlAction(0, 37, true) -- TAB
         DisableControlAction(0, 45, true) -- R
         DisableControlAction(0, 140, true) -- Melee attack
+        RemoveAllPickupsOfType(14) -- delete weapon drops
         if isInInventory then
             DisableAllControlActions(0)
         end

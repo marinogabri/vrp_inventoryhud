@@ -1,4 +1,4 @@
-local currentWeapon = nil
+currentWeapon = nil
 
 function vRPin.equipWeapon(weapon)
     local ped = PlayerPedId()
