@@ -1,7 +1,7 @@
 # vrp_inventoryhud
 Drag and drop inventory hud for vRP 1
 
-You can support me on buy me a coffee.
+You can support me on buy me a coffee.<br>
 [<img src="https://i.imgur.com/GfsNHfa.png" width="200" />](https://www.buymeacoffee.com/marinogabri)
 
 # Installation
