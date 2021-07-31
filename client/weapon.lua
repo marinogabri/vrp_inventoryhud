@@ -53,3 +53,16 @@ Citizen.CreateThread(function()
         end
     end
 end)
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(500)
+        if vRP.isInComa({}) then
+            if currentWeapon ~= nil then
+                currentWeapon = nil
+                RemoveAllPedWeapons(PlayerPedId(), true)
+                Citizen.Wait(5000)
+            end
+        end
+    end
+end)
