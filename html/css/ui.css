@@ -355,6 +355,10 @@ input[type=number] {
     letter-spacing: 0.1vh;
 }
 
+#otherInfo {
+    text-align: right;
+}
+
 #description {
     display: none;
     position: absolute;
