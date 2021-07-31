@@ -131,7 +131,7 @@ function showHotbar(hotbarItems) {
 
 function inventorySetup(items, hotbarItems, weight, maxWeight) {
     $("#playerInventory").html("");
-    $("#playerInfo").html("<h3>Main inventory</h3><p>" +weight + "/" + maxWeight + " KG</p>");
+    $("#playerInfo").html("<h3>Main inventory</h3><p>" + round(weight) + "/" + maxWeight + " KG</p>");
     $("#playerInfo").show();
 
     for(let i=1; i<6; i++) {
@@ -171,7 +171,7 @@ function inventorySetup(items, hotbarItems, weight, maxWeight) {
         itemWeight = item.weight * item.count;
 
         $("#playerInventory").find("[data-hotbar=" + item.slot + "]").html('<div id="item-' + item.slot + '" class="item" style = "background-image: url(\'img/' + image + '.png\')">' +
-        '<div class="item-count">' + count + '(' + itemWeight +' kg)</div><div class="item-name">' + item.label + '</div> </div ><div class="item-name-bg"></div>');
+        '<div class="item-count">' + count + '(' + round(itemWeight) +' kg)</div><div class="item-name">' + item.label + '</div> </div ><div class="item-name-bg"></div>');
 
         $('#item-' + item.slot).data('item', item);
         $('#item-' + item.slot).data('inventory', "hotbar");
@@ -184,7 +184,7 @@ function inventorySetup(items, hotbarItems, weight, maxWeight) {
         index += 6;
         
         $("#playerInventory").append('<div class="slot"><div id="item-' + index + '" class="item" style = "background-image: url(\'img/' + image + '.png\')">' +
-        '<div class="item-count">' + count + '(' + itemWeight +' kg)</div><div class="item-name">' + item.label + '</div> </div ><div class="item-name-bg"></div></div>');
+        '<div class="item-count">' + count + '(' + round(itemWeight) +' kg)</div><div class="item-name">' + item.label + '</div> </div ><div class="item-name-bg"></div></div>');
         $('#item-' + index).data('item', item);
         $('#item-' + index).data('inventory', "main");
     });
@@ -192,7 +192,7 @@ function inventorySetup(items, hotbarItems, weight, maxWeight) {
 
 function secondInventorySetup(items, weight, maxWeight) {
     $("#otherInventory").html("");
-    $("#otherInfo").html("<h3>" + type + "</h3><p>" +weight + "/" + maxWeight + " KG</p>");
+    $("#otherInfo").html("<h3>" + type + "</h3><p>" + round(weight) + "/" + maxWeight + " KG</p>");
     $("#otherInfo").show();
     $.each(items, function (index, item) {
         count = setCount(item, true);
@@ -200,7 +200,7 @@ function secondInventorySetup(items, weight, maxWeight) {
         image = setImage(item);
 
         $("#otherInventory").append('<div class="slot"><div id="itemOther-' + index + '" class="item" style = "background-image: url(\'img/' + image + '.png\')">' +
-            '<div class="item-count">' + count + '(' + itemWeight +' kg)</div><div class="item-name">' + item.label + '</div> </div ><div class="item-name-bg"></div></div>');
+            '<div class="item-count">' + count + '(' + round(itemWeight) +' kg)</div><div class="item-name">' + item.label + '</div> </div ><div class="item-name-bg"></div></div>');
         $('#itemOther-' + index).data('item', item);
         $('#itemOther-' + index).data('inventory', "second");
     });
@@ -253,6 +253,10 @@ function setImage(item) {
     }
 
     return image;
+}
+
+function round(number) {
+    return number.toFixed(1);
 }
 
 function setCount(item, second) {
