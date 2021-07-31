@@ -84,12 +84,13 @@ function vRPin.getChestItems(chestname, player)
         local max_weight = getChestMaxWeight(chestname)
         local items = {}
         for k,v in pairs(Chests[chestname]) do
-            local item_name,description = vRP.getItemDefinition({k})
+            local item_name,description,weight = vRP.getItemDefinition({k})
 			table.insert(items, {
 				label = item_name,
 				count = v.amount,
 				description = description,
-				name = k
+				name = k,
+                weight = weight
 			})
         end
         INclient.setSecondInventoryItems(player, {items, weight, max_weight})
@@ -100,12 +101,13 @@ function vRPin.getChestItems(chestname, player)
             local weight = vRP.computeItemsWeight({rawItems})
             local max_weight = getChestMaxWeight(chestname)
             for k,v in pairs(rawItems) do
-                local item_name,description = vRP.getItemDefinition({k})
+                local item_name,description,weight = vRP.getItemDefinition({k})
                 table.insert(items, {
                     label = item_name,
                     count = v.amount,
                     description = description,
-                    name = k
+                    name = k,
+                    weight = weight
                 })
             end
 

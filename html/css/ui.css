@@ -85,7 +85,8 @@ input[type=number] {
     border-radius: 8px;
 }
 
-#playerInventory > .slot:nth-child(1):after {
+#playerInventory > .slot:nth-child(1):after,
+#hotbar > .slot:nth-child(1):after {
 	top: 0;
 	left: 0;
 	margin: 0 auto;
@@ -106,7 +107,8 @@ input[type=number] {
 	outline-offset: -1px;
 }
 
-#playerInventory > .slot:nth-child(2):after {
+#playerInventory > .slot:nth-child(2):after,
+#hotbar > .slot:nth-child(2):after {
 	top: 0;
 	left: 0;
 	margin: 0 auto;
@@ -127,7 +129,8 @@ input[type=number] {
 	outline-offset: -1px;
 }
 
-#playerInventory > .slot:nth-child(3):after {
+#playerInventory > .slot:nth-child(3):after,
+#hotbar > .slot:nth-child(3):after {
 	top: 0;
 	left: 0;
 	margin: 0 auto;
@@ -148,7 +151,8 @@ input[type=number] {
 	outline-offset: -1px;
 }
 
-#playerInventory > .slot:nth-child(4):after {
+#playerInventory > .slot:nth-child(4):after,
+#hotbar > .slot:nth-child(4):after {
 	top: 0;
 	left: 0;
 	margin: 0 auto;
@@ -169,7 +173,8 @@ input[type=number] {
 	outline-offset: -1px;
 }
 
-#playerInventory > .slot:nth-child(5):after {
+#playerInventory > .slot:nth-child(5):after,
+#hotbar > .slot:nth-child(5):after {
 	top: 0;
 	left: 0;
 	margin: 0 auto;
@@ -247,6 +252,7 @@ input[type=number] {
     width: 114px;
     height: 20px;
     z-index: 500;
+    font-size: 12px;
 }
 
 .ammoIcon {

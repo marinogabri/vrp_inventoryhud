@@ -213,7 +213,7 @@ function vRPin.getInventoryItems(player)
 	end
 
 	for k,v in pairs(data.inventory) do 
-		local item_name, description = vRP.getItemDefinition({k})
+		local item_name, description, weight = vRP.getItemDefinition({k})
 		local found = false
 
 		if item_name ~= nil then
@@ -225,6 +225,7 @@ function vRPin.getInventoryItems(player)
 						count = v.amount,
 						description = description,
 						name = idname,
+						weight = weight,
 						slot = slot
 					})
 				end
@@ -235,6 +236,7 @@ function vRPin.getInventoryItems(player)
 					label = item_name,
 					count = v.amount,
 					description = description,
+					weight = weight,
 					name = k
 				})
 			end
