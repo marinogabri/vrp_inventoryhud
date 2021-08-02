@@ -11,6 +11,7 @@ vRPclient = Tunnel.getInterface("vRP","vrp_inventoryhud")
 
 openInventories = {}
 Hotbars = {}
+vTypes = {}
 
 PerformHttpRequest("https://raw.githubusercontent.com/marinogabri/vrp_inventoryhud/master/version",function(err,newVersion,headers)
 	if err == 200 then
@@ -151,23 +152,13 @@ end
 function vRPin.closeInventory(type)
 	local user_id = vRP.getUserId({source})
 
-	-- if type == 'trunk' then
-	-- 	print(type)
-	-- 	local strings = splitString(openInventories[user_id], ":")
-	-- 	local owner_id = splitString(strings[2], "-")[2]
-
-	-- 	print(owner_id)
-	-- 	local ownerSource = vRP.getUserSource({owner_id})
-	-- 	vRPclient.vc_closeDoor(nplayer, {vtype,5})
-
-	-- end
+	if vTypes[user_id] ~= nil then
+		vRPclient.vc_closeDoor(vTypes[user_id][1], {vTypes[user_id][2],5})
+		vTypes[user_id] = nil
+	end
 	
 	vRPclient.stopAnim(source, {false})
 	openInventories[user_id] = nil
-end
-
-function log(...)
-	print(...)
 end
 
 function vRPin.inventoryOpened(player)
@@ -175,8 +166,15 @@ function vRPin.inventoryOpened(player)
 	if user_id ~= nil then
 		vRPclient.getNearestOwnedVehicle(player,{2},function(ok,vtype,name)
 			if ok then
-				openTrunk(user_id, player, user_id, name, vtype)
-				return
+				INclient.isIsideACar(player, {}, function(inside)
+					if inside then
+						openGlovebox(player, user_id, user_id, name)
+						return
+					else
+						openTrunk(player, user_id, user_id, name, vtype)
+						return
+					end
+				end)
 			end
 		end)
 
@@ -186,9 +184,7 @@ function vRPin.inventoryOpened(player)
 				vRPclient.isInComa(nplayer,{}, function(inComa)
 					vRPclient.isHandcuffed(nplayer,{}, function(isHandcuffed)
 						if inComa or isHandcuffed then
-							INclient.openInventory(player, {'player'})
-							vRPclient.playAnim(player,{true,{{"mini@repair","fixing_a_player",1}},true})
-							loadTargetInventory(player, user_id, nplayer)
+							loadTargetInventory(player, user_id, nplayer, nuser_id)
 							return
 						end
 					end)

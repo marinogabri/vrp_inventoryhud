@@ -32,12 +32,13 @@ You can support me on buy me a coffee.<br>
 
 # Features
 - Hotbar
+- Glovebox
 - Drag and drop
 - Well coded
 - Secure
 - Chest support
-- Trunks are now avaible! Press F1 near your personal vehicle and the trunk will open. You can also ask to open the trunk to the nearest player!
-- Shops are now avaible!
+- Trunks: Press F1 near your personal vehicle and the trunk will open. You can also ask to open the trunk to the nearest player!
+- Shops
 - You can now search items. Only avaible in the secondary inventory 
 - Now you can loot in coma players by pressing F1!
 

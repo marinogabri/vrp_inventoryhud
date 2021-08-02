@@ -423,6 +423,12 @@ $(document).ready(function () {
                     item: itemData,
                     number: parseInt($("#count").val())
                 }));
+            } else if (type === "glovebox" && itemInventory === "second") {
+                disableInventory(500);
+                $.post("http://vrp_inventoryhud/TakeFromChest", JSON.stringify({
+                    item: itemData,
+                    number: parseInt($("#count").val())
+                }));
             } else if (type === "player" && itemInventory === "second") {
                 disableInventory(500);
                 $.post("http://vrp_inventoryhud/TakeFromPlayer", JSON.stringify({
@@ -450,6 +456,12 @@ $(document).ready(function () {
                     number: parseInt($("#count").val())
                 }));
             } else if (type === "chest" && itemInventory === "main") {
+                disableInventory(500);
+                $.post("http://vrp_inventoryhud/PutIntoChest", JSON.stringify({
+                    item: itemData,
+                    number: parseInt($("#count").val())
+                }));
+            } else if (type === "glovebox" && itemInventory === "main") {
                 disableInventory(500);
                 $.post("http://vrp_inventoryhud/PutIntoChest", JSON.stringify({
                     item: itemData,

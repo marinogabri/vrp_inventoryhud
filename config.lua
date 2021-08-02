@@ -5,18 +5,24 @@ Config.ChestSaveTime = 5 -- in minutes
 
 Config.Chests = {
     ["lspd"] = { 
-        position ={ 
-            x=144.45332336426,
-            y=-948.57434082031,
-            z=29.75318145752,
+        position = { 
+            x = 144.45332336426,
+            y = -948.57434082031,
+            z = 29.75318145752,
         }, 
         permission = "police.vehicle",
         maxWeight = 50 
     },
 }
 
+Config.DefaultTrunkWeight = 30
 Config.Trunks = {
     ["sultanrs"] = 30
+}
+
+Config.DefaultGloveboxWeight = 5
+Config.Gloveboxes = {
+    ["sultanrs"] = 8
 }
 
 -- Shops

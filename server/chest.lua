@@ -8,16 +8,26 @@ local function getChestMaxWeight(id)
         local maxWeight = Config.Trunks[vehicle]
         if maxWeight ~= nil then
             return maxWeight
+        else
+            return Config.DefaultTrunkWeight
+        end
+    elseif type == "glovebox" then
+        local vehicle = s[3]
+        local maxWeight = Config.Gloveboxes[vehicle]
+        if maxWeight ~= nil then
+            return maxWeight
+        else
+            return Config.DefaultGloveboxWeight
         end
     elseif type == "chest" then
         local chestId = s[2]
         local maxWeight = Config.Chests[chestId].maxWeight
         if maxWeight ~= nil then
             return maxWeight
+        else
+            return Config.DefaultChestMaxWeight
         end
     end
-
-    return Config.DefaultChestMaxWeight
 end
 
 function vRPin.putIntoChest(idname, amount)
@@ -117,24 +127,32 @@ function vRPin.getChestItems(chestname, player)
     end
 end
 
-function openTrunk(player, user_id, owner_id, vname, vtype)
-    INclient.isIsideACar(player, {}, function(inside)
-        if not inside then
-            local id = "trunk:user-" .. owner_id .. ":" .. string.lower(vname)
-            -- local ownerSource = vRP.getUserSource({owner_id})
-        
-            vRPclient.playAnim(player,{true,{{"mini@repair","fixing_a_player",1}},true})
-            -- vRPclient.vc_openDoor(ownerSource, {vtype,5})
-        
-            INclient.openInventory(player, {'trunk'})
-            openChest(user_id, player, id)
-        end
-    end)
+function openTrunk(player, user_id, owner_id, vname, vtype)    
+    local id = "trunk:user-" .. owner_id .. ":" .. string.lower(vname)
+    if isChestFree(id) then
+        openInventories[user_id] = id
+        INclient.openInventory(player, {"trunk"})
+        vRPin.getChestItems(id, player)
+
+        local ownerSource = vRP.getUserSource({owner_id})
+        vRPclient.vc_openDoor(ownerSource, {vtype,5})
+        vTypes[user_id] = {ownerSource,vtype}
+        vRPclient.playAnim(player,{true,{{"mini@repair","fixing_a_player",1}},true})
+    else
+        vRPclient.notify(player,{"~r~Trunk is busy."})
+    end
 end
 
-function closeTrunk(player, user_id)
-    local inv = openInventories[user_id]
-
+function openGlovebox(player, user_id, owner_id, vname)    
+    local id = "glovebox:user-" .. owner_id .. ":" .. string.lower(vname)
+    if isChestFree(id) then
+        openInventories[user_id] = id
+        INclient.openInventory(player, {"glovebox"})
+        vRPin.getChestItems(id, player)
+        vRPclient.playAnim(player,{true,{{"mini@repair","fixing_a_player",1}},true})
+    else
+        vRPclient.notify(player,{"~r~Glovebox is busy."})
+    end
 end
 
 function isChestFree(id)
@@ -150,11 +168,13 @@ end
 function openChest(user_id, player, id)
     if isChestFree(id) then
         openInventories[user_id] = id
+        INclient.openInventory(player, {"chest"})
         vRPin.getChestItems(id, player)
     else
         vRPclient.notify(player,{"~r~Chest is busy."})
     end
 end
+exports("openChest", openChest)
 
 local function create_chest(user_id,player,name,position,permission)	
     local id = "chest:"..name
@@ -163,7 +183,6 @@ local function create_chest(user_id,player,name,position,permission)
 		local user_id = vRP.getUserId({player})
 		if user_id ~= nil then
 			if vRP.hasPermission({user_id, permission}) then
-                INclient.openInventory(player, {"chest"})
                 openChest(user_id, player, id)
 			end
 		end

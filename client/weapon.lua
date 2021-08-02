@@ -57,7 +57,7 @@ end)
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(500)
-        if vRP.isInComa({}) then
+        if vRP.isInComa({}) or vRP.isHandcuffed{} or vRP.isJailed({}) then
             if currentWeapon ~= nil then
                 currentWeapon = nil
                 RemoveAllPedWeapons(PlayerPedId(), true)
