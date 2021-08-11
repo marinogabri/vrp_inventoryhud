@@ -64,7 +64,7 @@ local function create_shop(user_id,player,name,position,permission,blipId,blipCo
 	end
 	
     vRPclient.addMarker(player,{position.x,position.y,position.z-1,0.7,0.7,0.5,0,255,125,125,150})
-    vRPclient.addBlip(player,{position.x,position.y,position.z,blipId,blipColor,"Shop: " .. name})
+    vRPclient.addBlip(player,{position.x,position.y,position.z,blipId,blipColor,name})
 	vRP.setArea({player,id,position.x,position.y,position.z,2,2,shop_enter,shop_leave})
 end
 

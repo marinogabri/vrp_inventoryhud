@@ -31,13 +31,12 @@ function vRPin.requestItemGive(idname, amount)
 	  	vRPclient.getNearestPlayer(player,{10},function(nplayer)
 			local nuser_id = vRP.getUserId({nplayer})
 			if nuser_id ~= nil then
-				-- weight check
 				local new_weight = vRP.getInventoryWeight({nuser_id})+vRP.getItemWeight({idname})*amount
 				if new_weight <= vRP.getInventoryMaxWeight({nuser_id}) then
 					if vRP.tryGetInventoryItem({user_id,idname,amount,true}) then
 						vRP.giveInventoryItem({nuser_id,idname,amount,true})
 		
-						vRPclient.playAnim(player,{true,{{"mp_common","givetake1_a",1}},false})
+						vRPclient.playAnim(player,{true,{{"mp_common","givetake2_a",1}},false})
 						vRPclient.playAnim(nplayer,{true,{{"mp_common","givetake2_a",1}},false})
 					end
 				else
@@ -76,14 +75,6 @@ function vRPin.requestReload(player, ammo)
 		if vRP.tryGetInventoryItem({user_id, "ammo", ammo, true}) then
 			return ammo
 		end
-	end
-end
-
-function vRPin.requestItemDrop(idname, amount)
-	local user_id = vRP.getUserId({source})
-	local player = vRP.getUserSource({user_id})
-	if vRP.tryGetInventoryItem({user_id,idname,amount,true}) then
-		INclient.loadPlayerInventory(player)
 	end
 end
 
@@ -152,12 +143,14 @@ end
 function vRPin.closeInventory(type)
 	local user_id = vRP.getUserId({source})
 
-	if vTypes[user_id] ~= nil then
-		vRPclient.vc_closeDoor(vTypes[user_id][1], {vTypes[user_id][2],5})
-		vTypes[user_id] = nil
+	if type == "trunk" or type == "glovebox" then
+		vRPclient.stopAnim(source, {false})
+		if vTypes[user_id] ~= nil then
+			vRPclient.vc_closeDoor(vTypes[user_id][1], {vTypes[user_id][2],5})
+			vTypes[user_id] = nil
+		end
 	end
 	
-	vRPclient.stopAnim(source, {false})
 	openInventories[user_id] = nil
 end
 
@@ -192,7 +185,8 @@ function vRPin.inventoryOpened(player)
 			end
 		end)
 
-		INclient.openInventory(player, {'normal'})
+		vRPin.openDrop(player, user_id)
+		-- INclient.openInventory(player, {'normal'})
 	end
 end
 

@@ -13,7 +13,8 @@ client_scripts {
   'client/chest.lua',
   'client/shop.lua',
   'client/player.lua',
-  'client/weapon.lua'
+  'client/weapon.lua',
+  'client/drops.lua'
 }
 
 server_scripts {
@@ -22,7 +23,8 @@ server_scripts {
   'server/main.lua',
   'server/chest.lua',
   'server/shop.lua',
-  'server/player.lua'
+  'server/player.lua',
+  'server/drops.lua'
 }
 
 files {

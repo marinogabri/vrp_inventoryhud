@@ -377,29 +377,6 @@ $(document).ready(function () {
         }
     });
 
-    $('#drop').droppable({
-        hoverClass: 'hoverControl',
-        drop: function (event, ui) {
-            itemData = ui.draggable.data("item");
-
-            if (itemData == undefined) {
-                return;
-            }
-
-            itemInventory = ui.draggable.data("inventory");
-
-            if (itemInventory == undefined || itemInventory == "second") {
-                return;
-            }
-
-            disableInventory(300);
-            $.post("http://vrp_inventoryhud/DropItem", JSON.stringify({
-                item: itemData,
-                number: parseInt($("#count").val())
-            }));
-        }
-    });
-
     $('#playerInventory').droppable({
         drop: function (event, ui) {
             itemData = ui.draggable.data("item");
@@ -432,6 +409,12 @@ $(document).ready(function () {
             } else if (type === "player" && itemInventory === "second") {
                 disableInventory(500);
                 $.post("http://vrp_inventoryhud/TakeFromPlayer", JSON.stringify({
+                    item: itemData,
+                    number: parseInt($("#count").val())
+                }));
+            } else if (type === "drop" && itemInventory === "second") {
+                disableInventory(500);
+                $.post("http://vrp_inventoryhud/TakeFromDrop", JSON.stringify({
                     item: itemData,
                     number: parseInt($("#count").val())
                 }));
@@ -470,6 +453,12 @@ $(document).ready(function () {
             } else if (type === "player" && itemInventory === "main") {
                 disableInventory(500);
                 $.post("http://vrp_inventoryhud/PutIntoPlayer", JSON.stringify({
+                    item: itemData,
+                    number: parseInt($("#count").val())
+                }));
+            } else if (type === "drop" && itemInventory === "main") {
+                disableInventory(500);
+                $.post("http://vrp_inventoryhud/PutIntoDrop", JSON.stringify({
                     item: itemData,
                     number: parseInt($("#count").val())
                 }));

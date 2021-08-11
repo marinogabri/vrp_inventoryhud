@@ -14,7 +14,7 @@ RegisterCommand('inventory',function()
         INserver.inventoryOpened({playerSource})
     end
 end)
-RegisterKeyMapping('inventory', 'Open Inventory', 'keyboard', 'F1')
+RegisterKeyMapping('inventory', 'Open Inventory', 'keyboard', Config.OpenInventoryKey)
 
 for i=1, 5 do 
     RegisterCommand('slot' .. i,function()
@@ -42,7 +42,7 @@ RegisterCommand('hotbar',function()
         end)
     end
 end)
-RegisterKeyMapping('hotbar', 'Check your hotbar items', 'keyboard', 'TAB')
+RegisterKeyMapping('hotbar', 'Check your hotbar items', 'keyboard', Config.OpenHotbarKey)
 
 function vRPin.openInventory(type)
     vRPin.loadPlayerInventory()
@@ -52,7 +52,10 @@ function vRPin.openInventory(type)
         type = type 
     })
     SetNuiFocus(true, true)
-    TriggerScreenblurFadeIn(0)
+
+    if Config.EnableBlur then
+        TriggerScreenblurFadeIn(0)
+    end
 end
 
 function closeInventory(type)
@@ -62,7 +65,10 @@ function closeInventory(type)
     })
     SetNuiFocus(false, false)
     INserver.closeInventory({type})
-    TriggerScreenblurFadeOut(0)
+    
+    if Config.EnableBlur then
+        TriggerScreenblurFadeOut(0)
+    end
 end
 
 RegisterNUICallback("NUIFocusOff", function(data, cb)
@@ -72,19 +78,6 @@ end)
 
 RegisterNUICallback("UseItem", function(data, cb)
     INserver.requestItemUse({data.item.name})
-    cb("ok")
-end)
-
-RegisterNUICallback("DropItem", function(data, cb)
-    if IsPedSittingInAnyVehicle(PlayerPedId()) then return end
-    if type(data.number) == "number" and math.floor(data.number) == data.number then
-        INserver.requestItemDrop({data.item.name, tonumber(data.number)})
-
-        if currentWeapon == data.item.name then
-            currentWeapon = nil
-            RemoveAllPedWeapons(PlayerPedId(), true)
-        end
-    end
     cb("ok")
 end)
 

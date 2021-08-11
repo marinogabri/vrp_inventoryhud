@@ -1,14 +1,18 @@
 Config = {}
 
+Config.EnableBlur = true -- enable blur screen while inventory is open
+Config.OpenInventoryKey = 'F1'
+Config.OpenHotbarKey = 'TAB'
+
 Config.DefaultChestMaxWeight = 100
 Config.ChestSaveTime = 5 -- in minutes
 
 Config.Chests = {
     ["lspd"] = { 
         position = { 
-            x = 144.45332336426,
-            y = -948.57434082031,
-            z = 29.75318145752,
+            x = 451.14639282227,
+            y = -982.4599609375,
+            z = 30.689580917358,
         }, 
         permission = "police.vehicle",
         maxWeight = 50 
@@ -30,35 +34,209 @@ Config.Gloveboxes = {
 -- permission if you want to restrict the shop
 -- items => item = price
 Config.Shops = {
-    ["food"] = {
+    ["Market"] = {
         positions = {
             {
-                x = 175.66384887695,
-                y = -920.71490478516,
-                z = 30.686779022217 
+                x = -47.522762298584,
+                y = -1756.85717773438,
+                z = 29.4210109710693    
+            },
+            {
+                x = 25.7454013824463,
+                y= -1345.26232910156,
+                z = 29.4970207214355
+            }, 
+            {
+                x = 1135.57678222656,
+                y= -981.78125,
+                z = 46.4157981872559
+            }, 
+            {
+                x = 1163.53820800781,
+                y= -323.541320800781,
+                z = 69.2050552368164
+            }, 
+            {
+                x = 374.190032958984,
+                y= 327.506713867188,
+                z = 103.566368103027
+            }, 
+            {
+                x = 2555.35766601563,
+                y = 382.16845703125,
+                z = 108.622947692871
+            }, 
+            {
+                x = 2676.76733398438,
+                y= 3281.57788085938,
+                z = 55.2411231994629
+            }, 
+            {
+                x = 1960.50793457031,
+                y = 3741.84008789063,
+                z = 32.3437385559082
+            },
+            {
+                x = 1393.23828125,
+                y = 3605.171875,
+                z = 34.9809303283691
+            }, 
+            {
+                x = 1166.18151855469,
+                y= 2709.35327148438,
+                z = 38.15771484375
+            }, 
+            {
+                x = 547.987609863281,
+                y = 2669.7568359375,
+                z = 42.1565132141113
+            }, 
+            {
+                x = 1698.30737304688,
+                y = 4924.37939453125,
+                z = 42.0636749267578
+            }, 
+            {
+                x = 1729.54443359375,
+                y = 6415.76513671875,
+                z = 35.0372200012207
+            }, 
+            {
+                x = -3243.9013671875,
+                y = 1001.40405273438,
+                z = 12.8307056427002
+            }, 
+            {
+                x = -2967.8818359375,
+                y = 390.78662109375,
+                z = 15.0433149337769
+            }, 
+            {
+                x = -3041.17456054688,
+                y= 585.166198730469,
+                z = 7.90893363952637
+            }, 
+            {
+                x = -1820.55725097656,
+                y = 792.770568847656,
+                z =138.113250732422
+            }, 
+            {
+                x = -1486.76574707031,
+                y= -379.553985595703,
+                z = 40.163387298584
+            }, 
+            {
+                x = -1223.18127441406,
+                y = -907.385681152344,
+                z = 12.3263463973999
+            }, 
+            {
+                x = -707.408996582031,
+                y = -913.681701660156,
+                z = 19.2155857086182
             },
         },
         blipId = 52,
         blipColor = 2,
         items = {
-            ["kebab"] = 10,
-            ["water"] = 10
+            -- Drinks
+            ["milk"] = 20,
+            ["water"] = 20,
+            ["coffee"] = 40,
+            ["tea"] = 40,
+            ["icetea"] = 80,
+            ["orangejuice"] = 80,
+            ["cocacola"] = 120,
+            ["redbull"] = 120,
+            ["lemonade"] = 140,
+            ["vodka"] = 300,
+        
+            --Food
+            ["bread"] = 20,
+            ["donut"] = 20,
+            ["tacos"] = 80,
+            ["sandwich"] = 200,
+            ["kebab"] = 200,
+            ["pdonut"] = 650,
         }
     },
-    ["weapon"] = {
+    ["Ammu-Nation"] = {
         positions = {
             {
-                x = 177.97305297852,
-                y = -916.49786376953,
-                z = 30.686786651611 
+                x = -662.180,
+                y = -934.961,
+                z = 21.829
+            },
+            {
+                x = 810.25,
+                y = -2157.60,
+                z = 29.62
+            },
+            {
+                x = 1693.44,
+                y = 3760.16,
+                z = 34.71
+            },
+            {
+                x = -330.24,
+                y = 6083.88,
+                z = 31.45
+            },
+            {
+                x = 252.63,
+                y = -50.00,
+                z = 69.94
+            },
+            {
+                x = 22.56,
+                y = -1109.89,
+                z = 29.80
+            },
+            {
+                x = 2567.69,
+                y = 294.38,
+                z = 108.73
+            },
+            {
+                x = -1117.58,
+                y = 2698.61,
+                z = 18.55
+            },
+            {
+                x = 842.44,
+                y = -1033.42,
+                z = 28.19
+            },
+        },
+        blipId = 110,
+        blipColor = 1,
+        items = {
+            ["WEAPON_PISTOL"] = 1000,
+            ["WEAPON_SMG"] = 5000,
+            ["WEAPON_CROWBAR"] = 100,
+            ["WEAPON_KNIFE"] = 100,
+            ["WEAPON_HATCHET"] = 50,
+            ["WEAPON_BOTTLE"] = 30,
+            ["ammo"] = 100,
+        }
+    },
+    ["Police Weapons"] = {
+        positions = {
+            {
+                x = 451.59027099609,
+                y = -980.11553955078,
+                z = 30.689596176147 
             },
         },
         blipId = 110,
         blipColor = 1,
         permission = "police.vehicle",
         items = {
-            ["WEAPON_PISTOL"] = 1000,
-            ["ammo"] = 100
+            ["WEAPON_COMBATPISTOL"] = 0,
+            ["WEAPON_NIGHTSTICK"] = 0,
+            ["WEAPON_FLASHLIGHT"] = 0,
+            ["ammo"] = 0
         }
     },
 }
@@ -82,6 +260,15 @@ end
 Config.Items = {
     ["ammo"] = {"Ammo", "Ammo for your gun", nil,1},
     ["WEAPON_KNIFE"] = {"Knife", "A simple knife", equip('WEAPON_KNIFE'), 1},
+    ["WEAPON_DAGGER"] = {"Dagger", "A simple dagger", equip('WEAPON_DAGGER'), 1},
+    ["WEAPON_BOTTLE"] = {"Broken bottle", "A broken bottle", equip('weapon_bottle'), 1},
+    ["WEAPON_HATCHET"] = {"Hatchet", "A simple hatchet", equip('weapon_hatchet'), 1},
+    ["WEAPON_STONE_HATCHET"] = {"Stone hatchet", "A stone hatchet", equip('weapon_stone_hatchet'), 1},
+    ["WEAPON_KNUCKLE"] = {"Knuckle", "A simple knuckle", equip('weapon_knuckle'), 1},
+    ["WEAPON_MACHETE"] = {"Machete", "A simple machete", equip('weapon_machete'), 1},
+    ["WEAPON_SWITCHBLADE"] = {"Switchblade knife", "A switchblade knife", equip('weapon_switchblade'), 1},
+    ["WEAPON_WRENCH"] = {"Wrench", "A simple wrench", equip('weapon_wrench'), 1},
+    ["WEAPON_BATTLEAXE"] = {"Battle Axe", "A battle axe", equip('weapon_battleaxe'), 1},
     ["WEAPON_FLASHLIGHT"] = {"Flashlight", "A simple flashlight", equip('WEAPON_FLASHLIGHT'), 1},
     ["WEAPON_NIGHTSTICK"] = {"Nightstick", "A simple nightstick", equip('WEAPON_NIGHTSTICK'), 1}, 
     ["WEAPON_HAMMER"] = {"Hammer", "A simple hammer", equip('WEAPON_HAMMER'), 1},

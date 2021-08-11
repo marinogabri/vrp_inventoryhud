@@ -33,6 +33,7 @@ You can support me on buy me a coffee.<br>
 # Features
 - Hotbar
 - Glovebox
+- Drops
 - Drag and drop
 - Well coded
 - Secure
