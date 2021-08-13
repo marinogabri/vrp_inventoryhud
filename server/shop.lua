@@ -29,13 +29,15 @@ function openShop(user_id, player, shop)
     local items = {}
 
     for item, price in pairs(Config.Shops[shop].items) do
-        local item_name,description = vRP.getItemDefinition({item})
+        local item_name,description,weight = vRP.getItemDefinition({item})
         if item_name ~= nil then
 			table.insert(items, {
 				label = item_name,
 				price = price,
 				description = description,
-				name = item
+				name = item,
+                weight = weight,
+                count = 1
 			})
         end
     end
@@ -65,7 +67,7 @@ local function create_shop(user_id,player,name,position,permission,blipId,blipCo
 	
     vRPclient.addMarker(player,{position.x,position.y,position.z-1,0.7,0.7,0.5,0,255,125,125,150})
     vRPclient.addBlip(player,{position.x,position.y,position.z,blipId,blipColor,name})
-	vRP.setArea({player,id,position.x,position.y,position.z,2,2,shop_enter,shop_leave})
+	vRP.setArea({player,id,position.x,position.y,position.z,1,1,shop_enter,shop_leave})
 end
 
 AddEventHandler("vRP:playerSpawn",function(user_id,source,first_spawn)

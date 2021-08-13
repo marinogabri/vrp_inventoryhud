@@ -3,31 +3,37 @@ local Chests = {}
 local function getChestMaxWeight(id)
     local s = splitString(id, ":")
     local type = s[1]
+
+    local maxWeight = Config.DefaultChestMaxWeight
+
     if type == "trunk" then
         local vehicle = s[3]
-        local maxWeight = Config.Trunks[vehicle]
-        if maxWeight ~= nil then
-            return maxWeight
-        else
-            return Config.DefaultTrunkWeight
+        local thisWeight = Config.Trunks[vehicle]
+
+        maxWeight = Config.DefaultTrunkWeight
+
+        if thisWeight ~= nil then
+            maxWeight = thisWeight
         end
     elseif type == "glovebox" then
         local vehicle = s[3]
-        local maxWeight = Config.Gloveboxes[vehicle]
-        if maxWeight ~= nil then
-            return maxWeight
-        else
-            return Config.DefaultGloveboxWeight
+        local thisWeight = Config.Gloveboxes[vehicle]
+        
+        maxWeight = Config.DefaultGloveboxWeight
+
+        if thisWeight ~= nil then
+            maxWeight = thisWeight
         end
     elseif type == "chest" then
         local chestId = s[2]
-        local maxWeight = Config.Chests[chestId].maxWeight
-        if maxWeight ~= nil then
-            return maxWeight
-        else
-            return Config.DefaultChestMaxWeight
+        local thisWeight = Config.Chests[chestId].maxWeight
+        
+        if thisWeight ~= nil then
+            maxWeight = thisWeight
         end
     end
+
+    return maxWeight
 end
 
 function vRPin.putIntoChest(idname, amount)
@@ -193,7 +199,7 @@ local function create_chest(user_id,player,name,position,permission)
 	end
 	
 	vRPclient.addMarker(player,{position.x,position.y,position.z-1,0.7,0.7,0.5,0,255,125,125,150})
-	vRP.setArea({player,id,position.x,position.y,position.z,1,1.5,chest_enter,chest_leave})
+	vRP.setArea({player,id,position.x,position.y,position.z,1,1,chest_enter,chest_leave})
 end
 
 AddEventHandler("vRP:playerSpawn",function(user_id,source,first_spawn)

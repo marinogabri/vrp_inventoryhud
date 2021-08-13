@@ -196,7 +196,7 @@ function secondInventorySetup(items, weight, maxWeight) {
     $("#otherInfo").show();
     $.each(items, function (index, item) {
         count = setCount(item, true);
-        itemWeight = type !== "shop" ? item.weight * item.count : 0;
+        itemWeight = item.weight * item.count;
         image = setImage(item);
 
         $("#otherInventory").append('<div class="slot"><div id="itemOther-' + index + '" class="item" style = "background-image: url(\'img/' + image + '.png\')">' +
