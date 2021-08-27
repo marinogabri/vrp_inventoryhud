@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@500&display=swap');
+
 * {
     padding: 0;
     margin: 0;
-    font-family: 'Signika', sans-serif;
+    font-family: 'Encode Sans', sans-serif;
     text-transform: uppercase;
     color: white;
     user-select: none;
@@ -79,7 +81,8 @@ input[type=number] {
     float: left;
     width: 117px;
     height: 117px;
-    background-color: rgba(10, 10, 10, 0.5);
+    background-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 0 1px rgba(38, 38, 38, 0.3) inset;
     margin: 2px;
     position: relative;
     border-radius: 8px;
@@ -96,7 +99,6 @@ input[type=number] {
 	width: 15px !important;
 	font-size: 11px;
 	font-weight: bold;
-	font-family: "Signika";
 	text-align: center;
 	line-height: 14px;
 	vertical-align: middle;
@@ -118,7 +120,6 @@ input[type=number] {
 	width: 15px !important;
 	font-size: 11px;
 	font-weight: bold;
-	font-family: "Signika";
 	text-align: center;
 	line-height: 14px;
 	vertical-align: middle;
@@ -140,7 +141,6 @@ input[type=number] {
 	width: 15px !important;
 	font-size: 11px;
 	font-weight: bold;
-	font-family: "Signika";
 	text-align: center;
 	line-height: 14px;
 	vertical-align: middle;
@@ -162,7 +162,6 @@ input[type=number] {
 	width: 15px !important;
 	font-size: 11px;
 	font-weight: bold;
-	font-family: "Signika";
 	text-align: center;
 	line-height: 14px;
 	vertical-align: middle;
@@ -184,7 +183,6 @@ input[type=number] {
 	width: 15px !important;
 	font-size: 11px;
 	font-weight: bold;
-	font-family: "Signika";
 	text-align: center;
 	line-height: 14px;
 	vertical-align: middle;
@@ -193,16 +191,6 @@ input[type=number] {
 	text-shadow: none;
 	outline: 1px solid rgba(0,0,0,0.9);
 	outline-offset: -1px;
-}
-
-#hotbar {
-	height: 110px;
-	min-width: 110px;
-	width: fit-content;
-	position: absolute;
-	left: 50%;
-	bottom: 3%;
-	transform: translate(-50%, 0%);
 }
 
 .slot:hover {
@@ -222,14 +210,13 @@ input[type=number] {
     position: absolute;
     bottom: 0;
     text-align: center;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    width: 117px;
-    min-height: 20px;
+    width: 100%;
     z-index: 500;
     font-size: 12px;
-    background-color: rgba(10, 10, 10, 0.65);
-    border-radius: 8px;
+    padding: 2px 0px;
+    background-color: rgba(12, 12, 12, 0.25);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 
 .item-name-bg {
@@ -252,23 +239,12 @@ input[type=number] {
     width: 114px;
     height: 20px;
     z-index: 500;
-    font-size: 12px;
+    font-size: 10px;
 }
 
 .ammoIcon {
     width: 10px;
     height: 10px;
-}
-
-.info-div {
-    text-align: center;
-    padding: 5px;
-    background-color: rgba(17, 5, 17, 0.6);
-    width: 80%;
-    position: absolute;
-    left: 50%;
-    top: 15%;
-    transform: translate(-50%, -50%);
 }
 
 .controls-div {
@@ -281,7 +257,7 @@ input[type=number] {
 .control {
     width: 150px;
     height: 40px;
-    background-color: rgba(10, 10, 10, 0.5);
+    background-color: rgba(12, 12, 12, 0.25);
     margin: 10px;
     text-align: center;
     vertical-align: middle;
@@ -294,7 +270,7 @@ input[type=number] {
 }
 
 .hoverControl {
-    background-color: rgba(10, 10, 10, 0.8);
+    background-color: rgba(218, 0, 0, 0.2);
 }
 
 #playerInventory::-webkit-scrollbar-track,
@@ -352,11 +328,47 @@ input[type=number] {
     display: none;
     color: white;
     font-size: 18px;
-    letter-spacing: 0.1vh;
+    width: 625px;
 }
 
 #otherInfo {
     text-align: right;
+}
+
+#progbar {
+    display: block;
+    background: rgba(0, 0, 0, 0.2);
+	width: 100%;
+	height: 15px;
+	border-radius: 8px;
+	border: 1px solid rgba(0,0,0,0.0);
+}
+
+#progbar-value {
+	background: #30a121;
+	border: 0px;
+	border-radius: 8px;
+    height: 100%;
+}
+
+#hotbar {
+	height: 110px;
+	min-width: 110px;
+	width: fit-content;
+	position: absolute;
+	left: 50%;
+	bottom: 3%;
+	transform: translate(-50%, 0%);
+}
+
+#notifications {
+	height: 110px;
+	min-width: 110px;
+	width: fit-content;
+	position: absolute;
+	left: 50%;
+	bottom: 15%;
+	transform: translate(-50%, 0%);
 }
 
 #description {

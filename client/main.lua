@@ -71,6 +71,19 @@ function closeInventory(type)
     end
 end
 
+function vRPin.notify(item, text)
+    SendNUIMessage({
+        action = "notify",
+        item = item,
+        text = text 
+    })
+end
+
+RegisterNetEvent("vrp_inventoryhud:notify")
+AddEventHandler("vrp_inventoryhud:notify", function (item, text)
+    vRPin.notify(item, text)
+end)
+
 RegisterNUICallback("NUIFocusOff", function(data, cb)
     closeInventory(data.type)
     cb("ok")

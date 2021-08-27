@@ -4,9 +4,9 @@ Config.EnableBlur = true -- enable blur screen while inventory is open
 Config.OpenInventoryKey = 'F1'
 Config.OpenHotbarKey = 'TAB'
 
-Config.DefaultChestMaxWeight = 100
-Config.ChestSaveTime = 5 -- in minutes
+Config.ChestSaveTime = 30 -- in minutes
 
+Config.DefaultChestMaxWeight = 100
 Config.Chests = {
     ["lspd"] = { 
         position = { 

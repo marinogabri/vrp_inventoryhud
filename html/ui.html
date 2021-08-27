@@ -3,17 +3,15 @@
 
 <head>
     <title>vRP INVENTORY HUD</title>
-    <link href="https://fonts.googleapis.com/css?family=Signika" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/ui.css">
     <!-- <link rel="stylesheet" type="text/css" href="css/jquery-ui.css"> -->
-</head>
-
-<body>
     <script src="js/config.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="js/inventory.js"></script>
+</head>
 
+<body>
     <div class="ui">
         <div class="inventory">
             <div id="info">
@@ -25,37 +23,20 @@
                 <div class="controls-div">
                     <input type="text" class="control" id="search" placeholder="Type to search...">
                     <input type="number" class="control" id="count" value="1">
-                    <div class="control" id="use"></div>
-                    <div class="control" id="give"></div>
+                    <div class="control" id="use">Use</div>
+                    <div class="control" id="give">Give</div>
                 </div>
             </div>
             <div id="otherInventory" data-type="second">
-                <div id="noSecondInventoryMessage"></div>
+                <div id="noSecondInventoryMessage">Second inventory is not available</div>
             </div>
             <div id="description"></div>
         </div>
     </div>
 
     <div id="hotbar"></div>
-    
-    <div id="dialog">
-        <div id="nearPlayers"></div>
-    </div>
+    <div id="notifications"></div>
 
 </body>
-
-<script>
-    $(document).ready(function () {
-        $("#use").html("Use");
-        $("#give").html("Give");
-        $("#drop").html("Drop");
-        $("#noSecondInventoryMessage").html("Second inventory is not available");
-
-        $("#dialog").dialog({
-            autoOpen: false,
-            clickOutside: true
-        });
-    });
-</script>
 
 </html>

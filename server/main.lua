@@ -60,6 +60,7 @@ function vRPin.requestItemUse(idname)
 			local cb = value[1]
 			cb(player,key)
 			INclient.loadPlayerInventory(player)
+			INclient.notify(player, {{name = idname, label = vRP.getItemName({idname}), count = 1}, "Used"})
 		end
 	end
 end
