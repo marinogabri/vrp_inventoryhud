@@ -242,6 +242,26 @@ input[type=number] {
     font-size: 10px;
 }
 
+.item-action {
+    top: 0;
+	left: 0;
+	margin: 0 auto;
+	position: absolute;
+	height: 15px !important;
+	width: auto;
+	font-size: 11px;
+	font-weight: bold;
+	text-align: center;
+	line-height: 14px;
+	vertical-align: middle;
+	background-color: white;
+	color: black;
+	text-shadow: none;
+	outline: 1px solid rgba(0,0,0,0.9);
+	outline-offset: -1px;
+    padding: 2px;
+}
+
 .ammoIcon {
     width: 10px;
     height: 10px;

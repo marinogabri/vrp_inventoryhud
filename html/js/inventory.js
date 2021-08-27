@@ -87,7 +87,7 @@ function notify(item, text) {
 
     count = setCount(item, false);
     image = setImage(item);
-    itemBox.innerHTML = '<div class="item" style = "background-image: url(\'img/' + image + '.png\')"><div class="item-count">' + count + '</div><div class="item-name">' + text + '</div><div class="item-name-bg"></div></div>'
+    itemBox.innerHTML = '<div class="item" style = "background-image: url(\'img/' + image + '.png\')"><div class="item-count">' + count + '</div><div class="item-name">' + item.label + '</div><div class="item-action">' + text + '</div><div class="item-name-bg"></div></div>'
 
     document.querySelector("#notifications").appendChild(itemBox)
 
