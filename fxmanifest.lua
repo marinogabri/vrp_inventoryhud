@@ -35,4 +35,4 @@ files {
   'html/js/config.js',
   -- ICONS
   'html/img/*.png'
-} --'html/img/.png',
+}

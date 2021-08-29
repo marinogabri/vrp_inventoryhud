@@ -55,27 +55,46 @@ function vRPin.requestItemUse(idname)
 	local user_id = vRP.getUserId({source})
 	local player = vRP.getUserSource({user_id})
 	local choice = vRP.getItemChoices({idname})
-	for key, value in pairs(choice) do 
-		if key ~= "Give" and key ~= "Trash" then
-			local cb = value[1]
-			cb(player,key)
-			INclient.loadPlayerInventory(player)
-			INclient.notify(player, {{name = idname, label = vRP.getItemName({idname}), count = 1}, "Used"})
+
+	if string.find(idname, "WEAPON_") then
+		INclient.equipWeapon(player, {idname})
+	else
+		for key, value in pairs(choice) do 
+			if key ~= "Give" and key ~= "Trash" then
+				local cb = value[1]
+				cb(player,key)
+				INclient.loadPlayerInventory(player)
+				INclient.notify(player, {{name = idname, label = vRP.getItemName({idname}), count = 1}, "Used"})
+			end
 		end
 	end
 end
 
-function vRPin.requestReload(player, ammo)
-	local user_id = vRP.getUserId({player})
+function vRPin.requestReload(weapon, ammo)
+	local user_id = vRP.getUserId({source})
 	if user_id ~= nil then
-		local maxAmmo = vRP.getInventoryItemAmount({user_id, "ammo"})
-		if ammo > maxAmmo then 
-			ammo = maxAmmo
-		end
+		local ammoItem = Config.Items[weapon][5]
 
-		if vRP.tryGetInventoryItem({user_id, "ammo", ammo, true}) then
-			return ammo
+		if ammoItem ~= nil then
+			local maxAmmo = vRP.getInventoryItemAmount({user_id, ammoItem})
+			if ammo > maxAmmo then 
+				ammo = maxAmmo
+			end
+
+			if vRP.tryGetInventoryItem({user_id, ammoItem, ammo, true}) then
+				return true
+			else
+				INclient.notify(source, {{name = ammoItem, label = vRP.getItemName({ammoItem}), count = ammo}, "Missing"})
+			end
 		end
+	end
+end
+
+function vRPin.holstered(weapon, ammo)
+	local user_id = vRP.getUserId({source})
+	if user_id ~= nil then
+		local ammoItem = Config.Items[weapon][5]
+		vRP.giveInventoryItem({user_id, ammoItem, ammo, true})
 	end
 end
 

@@ -94,7 +94,7 @@ function vRPin.takeFromChest(idname, amount)
     end
 end
 
-function vRPin.getChestItems(chestname, player)
+function vRPin.getChestItems(chestname, player, label)
     if Chests[chestname] then
         local weight = vRP.computeItemsWeight({Chests[chestname]})
         local max_weight = getChestMaxWeight(chestname)
@@ -109,7 +109,7 @@ function vRPin.getChestItems(chestname, player)
                 weight = weight
 			})
         end
-        INclient.setSecondInventoryItems(player, {items, weight, max_weight})
+        INclient.setSecondInventoryItems(player, {items, weight, max_weight, label})
     else
         vRP.getSData({chestname, function(cdata)
             local rawItems = json.decode(cdata) or {}
@@ -127,7 +127,7 @@ function vRPin.getChestItems(chestname, player)
                 })
             end
 
-            INclient.setSecondInventoryItems(player, {items, weight, max_weight})
+            INclient.setSecondInventoryItems(player, {items, weight, max_weight, label})
             Chests[chestname] = rawItems
         end})
     end
@@ -171,25 +171,25 @@ function isChestFree(id)
     return true
 end
 
-function openChest(user_id, player, id)
+function openChest(user_id, player, id, label)
     if isChestFree(id) then
         openInventories[user_id] = id
         INclient.openInventory(player, {"chest"})
-        vRPin.getChestItems(id, player)
+        vRPin.getChestItems(id, player, label)
     else
         vRPclient.notify(player,{"~r~Chest is busy."})
     end
 end
 exports("openChest", openChest)
 
-local function create_chest(user_id,player,name,position,permission)	
+local function create_chest(user_id,player,name,position,permission,label)	
     local id = "chest:"..name
 
 	local chest_enter = function(player, area)
 		local user_id = vRP.getUserId({player})
 		if user_id ~= nil then
 			if vRP.hasPermission({user_id, permission}) then
-                openChest(user_id, player, id)
+                openChest(user_id, player, id, label)
 			end
 		end
 	end
@@ -205,7 +205,7 @@ end
 AddEventHandler("vRP:playerSpawn",function(user_id,source,first_spawn)
     if first_spawn then
         for k, v in pairs(Config.Chests) do
-            create_chest(user_id,source,k,v.position,v.permission)
+            create_chest(user_id,source,k,v.position,v.permission,v.label)
         end
     end
 end)

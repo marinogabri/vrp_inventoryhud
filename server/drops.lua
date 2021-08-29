@@ -3,14 +3,18 @@ local lastId = 1
 
 function getDropId(user_id)
     local id = openInventories[user_id]
-    local split = splitString(id, ":")
-    if split[1] == 'drop' then
-        if Drops[tonumber(split[2])] ~= nil then
-            return tonumber(split[2])
+    if id ~= nil then
+        local split = splitString(id, ":")
+        if split[1] == 'drop' then
+            if Drops[tonumber(split[2])] ~= nil then
+                return tonumber(split[2])
+            end
         end
     end
 
-    return nil
+    local newDrop = createNewDrop(GetEntityCoords(GetPlayerPed(vRP.getUserSource({user_id}))))
+    openInventories[user_id] = "drop:" .. newDrop
+    return newDrop
 end
 
 function getNearestDrop(pos)
@@ -22,9 +26,9 @@ function getNearestDrop(pos)
         end
     end
 
-    if nearestId == nil then
-        nearestId = createNewDrop(pos)
-    end
+    -- if nearestId == nil then
+    --     nearestId = createNewDrop(pos)
+    -- end
 
     return nearestId
 end
@@ -40,8 +44,7 @@ function createNewDrop(pos)
 
     Drops[id] = {
         position = pos,
-        items = {},
-        markerId = nil
+        items = {}
     }
 
     return id
@@ -49,17 +52,21 @@ end
 
 function loadDropItems(player, dropId)
     local items = {}
-    for k,v in pairs(Drops[dropId].items) do
-        local item_name,description,weight = vRP.getItemDefinition({k})
-        table.insert(items, {
-            label = item_name,
-            count = v.amount,
-            description = description,
-            name = k,
-            weight = weight
-        })
+
+    if dropId ~= nil then
+        for k,v in pairs(Drops[dropId].items) do
+            local item_name,description,weight = vRP.getItemDefinition({k})
+            table.insert(items, {
+                label = item_name,
+                count = v.amount,
+                description = description,
+                name = k,
+                weight = weight
+            })
+        end
     end
-    INclient.setSecondInventoryItems(player, {items, 0, 0})
+
+    INclient.setSecondInventoryItems(player, {items, 0, 0, "Drop"})
 end
 
 function refreshDropItems(dropId)
@@ -83,12 +90,13 @@ end
 function vRPin.openDrop(player, user_id)
     local pos = GetEntityCoords(GetPlayerPed(player))
     local dropId = getNearestDrop(pos)
+
     if dropId ~= nil then
         openInventories[user_id] = "drop:" .. dropId
-
-        INclient.openInventory(player, {"drop"})
-        loadDropItems(player, dropId)
     end
+    
+    loadDropItems(player, dropId)
+    INclient.openInventory(player, {"drop"})
 end
 
 function vRPin.putIntoDrop(idname, amount)

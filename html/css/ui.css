@@ -79,11 +79,11 @@ input[type=number] {
 
 .slot {
     float: left;
-    width: 117px;
-    height: 117px;
+    width: 124px;
+    height: 124px;
     background-color: rgba(0, 0, 0, 0.3);
     box-shadow: 0 0 0 1px rgba(38, 38, 38, 0.3) inset;
-    margin: 2px;
+    margin: 1px 1px 0px 0px;
     position: relative;
     border-radius: 8px;
 }

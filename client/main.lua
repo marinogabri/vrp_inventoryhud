@@ -123,12 +123,13 @@ function vRPin.loadPlayerInventory()
     end)
 end
 
-function vRPin.setSecondInventoryItems(items, weight, maxWeight)
+function vRPin.setSecondInventoryItems(items, weight, maxWeight, label)
     SendNUIMessage({
         action = "setSecondInventoryItems",
         itemList = items,
         weight = weight,
-        maxWeight = maxWeight
+        maxWeight = maxWeight,
+        label = label
     })
 end
 

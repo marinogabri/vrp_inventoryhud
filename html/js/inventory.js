@@ -1,4 +1,4 @@
-var type = "normal";
+var type = "drop";
 var isOpen = false
 var disabled = false;
 var disabledFunction = null;
@@ -29,7 +29,7 @@ window.addEventListener("message", function (event) {
         inventorySetup(event.data.itemList, event.data.hotbarItems, event.data.weight, event.data.maxWeight);
     } else if (event.data.action == "setSecondInventoryItems") {
         $("#search").show();
-        secondInventorySetup(event.data.itemList, event.data.weight, event.data.maxWeight);
+        secondInventorySetup(event.data.itemList, event.data.weight, event.data.maxWeight, event.data.label);
     } else if (event.data.action == "showHotbar") {
         showHotbar(event.data.hotbarItems)
     } else if (event.data.action == "notify") {
@@ -181,9 +181,13 @@ function inventorySetup(items, hotbarItems, weight, maxWeight) {
     });
 }
 
-function secondInventorySetup(items, weight, maxWeight) {
+function secondInventorySetup(items, weight, maxWeight, label) {
+    if (label === undefined) {
+        label = type
+    }
+
     $("#otherInventory").html("");
-    $("#otherInfo").html(maxWeight == 0 ? "<h3>" + type + "</h3>" : "<h3>" + type + "</h3><p>" + round(weight) + "/" + maxWeight + " KG</p><div id='progbar'><div id='progbar-value' style='width: " + (weight * 100) / maxWeight + "%'></div></div>");
+    $("#otherInfo").html(maxWeight == 0 ? "<h3>" + label + "</h3>" : "<h3>" + label + "</h3><p>" + round(weight) + "/" + maxWeight + " KG</p><div id='progbar'><div id='progbar-value' style='width: " + (weight * 100) / maxWeight + "%'></div></div>");
     $("#otherInfo").show();
     $.each(items, function (index, item) {
         count = setCount(item, true);
