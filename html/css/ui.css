@@ -79,11 +79,11 @@ input[type=number] {
 
 .slot {
     float: left;
-    width: 124px;
-    height: 124px;
+    width: 123px;
+    height: 123px;
     background-color: rgba(0, 0, 0, 0.3);
     box-shadow: 0 0 0 1px rgba(38, 38, 38, 0.3) inset;
-    margin: 1px 1px 0px 0px;
+    margin: 2px 2px 0px 0px;
     position: relative;
     border-radius: 8px;
 }
@@ -197,10 +197,9 @@ input[type=number] {
     background-color: rgba(10, 10, 10, 0.65);
 }
 
-.item,
-.item-other {
-    width: 117px;
-    height: 117px;
+.item {
+    width: 123px;
+    height: 123px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
@@ -262,11 +261,6 @@ input[type=number] {
     padding: 2px;
 }
 
-.ammoIcon {
-    width: 10px;
-    height: 10px;
-}
-
 .controls-div {
     position: absolute;
     left: 50%;
@@ -301,41 +295,13 @@ input[type=number] {
 
 #playerInventory::-webkit-scrollbar,
 #otherInventory::-webkit-scrollbar {
-    width: 4px;
+   width: 0px;
 }
 
 #playerInventory::-webkit-scrollbar-thumb,
 #otherInventory::-webkit-scrollbar-thumb {
 	background-color: rgba(10, 10, 10, 0.5);
 	border-radius: 8px;
-}
-
-.nearbyPlayerButton {
-    width: 100%;
-    margin-top: 5px;
-    display: block;
-    text-decoration: none;
-    padding: 2px;
-    color: rgba(255, 255, 255, 0.85);
-    background-color: rgba(63, 57, 83, 0.226);
-    text-shadow: none;
-    font-size: 14px !important;
-    outline: none;
-    text-transform: none;
-    text-align: center;
-    line-height: 30px;
-    border: none;
-}
-
-.nearbyPlayerButton:hover {
-    background-color: rgba(34, 29, 46, 0.8);
-}
-
-#noSecondInventoryMessage {
-    width: 615px;
-    height: 580px;
-    line-height: 580px;
-    text-align: center;
 }
 
 #info {
@@ -362,6 +328,7 @@ input[type=number] {
 	height: 15px;
 	border-radius: 8px;
 	border: 1px solid rgba(0,0,0,0.0);
+    margin-top: 2px;
 }
 
 #progbar-value {
@@ -417,10 +384,6 @@ input[type=number] {
     #otherInventory {
         width: 550px;
     }
-
-    #noSecondInventoryMessage {
-        width: 540px;
-    }
 }
 
 @media (max-width: 1300px) {
@@ -438,9 +401,5 @@ input[type=number] {
 
     #otherInventory {
         width: 425px;
-    }
-
-    #noSecondInventoryMessage {
-        width: 420px;
     }
 }

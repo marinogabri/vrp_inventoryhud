@@ -1,5 +1,4 @@
 var type = "drop";
-var isOpen = false
 var disabled = false;
 var disabledFunction = null;
 
@@ -10,19 +9,7 @@ window.addEventListener("message", function (event) {
         isOpen = true;
         $(".ui").fadeIn();
     } else if (event.data.action == "hide") {
-        // $(".ui").fadeOut();
-        
-        $.when($(".ui").fadeOut()).done(function() {
-            if (!isOpen) {
-                // $(".item").remove();
-                $("#otherInventory").html("<div id=\"noSecondInventoryMessage\"></div>");
-                $("#noSecondInventoryMessage").html("Second inventory is not available");
-                $("#playerInfo").hide();
-                $("#otherInfo").hide();
-                $("#search").hide();
-                isOpen = false;
-            }
-		});
+        $(".ui").fadeOut();
     } else if (event.data.action == "setType") {
         type = event.data.type;
     } else if (event.data.action == "setItems") {
