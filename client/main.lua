@@ -133,6 +133,18 @@ function vRPin.setSecondInventoryItems(items, weight, maxWeight, label)
     })
 end
 
+function Draw3DText(coords, text)
+    SetDrawOrigin(coords)
+	SetTextScale(0.35, 0.35)
+	SetTextFont(4)
+	SetTextEntry('STRING')
+	SetTextCentre(1)
+	AddTextComponentString(text)
+	DrawText(0.0, 0.0)
+	DrawRect(0.0, 0.0125, 0.03 + text:gsub('~.-~', ''):len() / 360, 0.03, 25, 25, 25, 140)
+	ClearDrawOrigin()
+end
+
 Citizen.CreateThread(function()
     local ped = PlayerPedId()
     RemoveAllPedWeapons(ped, true)

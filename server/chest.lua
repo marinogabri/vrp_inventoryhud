@@ -182,33 +182,15 @@ function openChest(user_id, player, id, label)
 end
 exports("openChest", openChest)
 
-local function create_chest(user_id,player,name,position,permission,label)	
-    local id = "chest:"..name
-
-	local chest_enter = function(player, area)
-		local user_id = vRP.getUserId({player})
-		if user_id ~= nil then
-			if vRP.hasPermission({user_id, permission}) then
-                openChest(user_id, player, id, label)
-			end
-		end
-	end
-
-	local chest_leave = function(player,area)
-		openInventories[user_id] = nil
-	end
-	
-	vRPclient.addMarker(player,{position.x,position.y,position.z-1,0.7,0.7,0.5,0,255,125,125,150})
-	vRP.setArea({player,id,position.x,position.y,position.z,1,1,chest_enter,chest_leave})
-end
-
-AddEventHandler("vRP:playerSpawn",function(user_id,source,first_spawn)
-    if first_spawn then
-        for k, v in pairs(Config.Chests) do
-            create_chest(user_id,source,k,v.position,v.permission,v.label)
+function vRPin.openChest(name, pos)
+    local user_id = vRP.getUserId({source})
+    if user_id ~= nil then
+        local id = "chest:".. name
+        if vRP.hasPermission({user_id, Config.Chests[name].permission}) then
+            openChest(user_id, source, id, name)
         end
     end
-end)
+end
 
 -- tasks
 function task_save_chests()
