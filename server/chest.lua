@@ -26,11 +26,13 @@ local function getChestMaxWeight(id)
         end
     elseif type == "chest" then
         local chestId = s[2]
-        local thisWeight = Config.Chests[chestId].maxWeight
+        if Config.Chests[chestId] ~= nil then
+		local thisWeight = Config.Chests[chestId].maxWeight
         
-        if thisWeight ~= nil then
-            maxWeight = thisWeight
-        end
+		if thisWeight ~= nil then
+		    maxWeight = thisWeight
+		end
+	end
     end
 
     return maxWeight
