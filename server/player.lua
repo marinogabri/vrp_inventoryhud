@@ -23,6 +23,7 @@ function vRPin.putIntoPlayer(idname, amount)
     local player = vRP.getUserSource({user_id})
     local target_id = getTarget(user_id)
     if target_id ~= nil then
+        local target = vRP.getUserSource({target_id})
         local new_weight = vRP.getInventoryWeight({target_id})+vRP.getItemWeight({idname})*amount
         if new_weight <= vRP.getInventoryMaxWeight({target_id}) then
             if vRP.tryGetInventoryItem({user_id,idname,amount,true}) then
@@ -35,7 +36,7 @@ function vRPin.putIntoPlayer(idname, amount)
             vRPclient.notify(player,{"~r~Target inventory is full."})
         end
 
-        loadTargetInventory(player, user_id, target)
+        loadTargetInventory(player, user_id, target, target_id)
         INclient.loadPlayerInventory(player)
     end
 end
@@ -45,6 +46,7 @@ function vRPin.takeFromPlayer(idname, amount)
     local player = vRP.getUserSource({user_id})
     local target_id = getTarget(user_id)
     if target_id ~= nil then
+        local target = vRP.getUserSource({target_id})
         local new_weight = vRP.getInventoryWeight({user_id})+vRP.getItemWeight({idname})*amount
         if new_weight <= vRP.getInventoryMaxWeight({user_id}) then
             if vRP.tryGetInventoryItem({target_id,idname,amount,true}) then
@@ -57,7 +59,7 @@ function vRPin.takeFromPlayer(idname, amount)
             vRPclient.notify(player,{"~r~Inventory is full."})
         end
 
-        loadTargetInventory(player, user_id, target)
+        loadTargetInventory(player, user_id, target, target_id)
         INclient.loadPlayerInventory(player)
     end
 end
