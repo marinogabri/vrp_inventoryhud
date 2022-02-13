@@ -2,7 +2,7 @@ local function getTarget(user_id)
     local id = openInventories[user_id]
     local split = splitString(id, ":")
     if split[1] == 'u' then
-        local target = split[2]
+        local target = tonumber(split[2])
         return target
     end
 
